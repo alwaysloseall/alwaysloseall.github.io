@@ -3,6 +3,7 @@ title: 一个运行在node上的mysql数据库查询工具库
 date: 2017-06-23 16:46:17
 comments: true
 tags: [Nodejs, JavaScript, Mysql]
+categories: 后端
 ---
 
 ```javascript
