@@ -1,7 +1,7 @@
 ---
 title: 造了个监听ajax请求的轮子
 date: 2017-06-26 19:48:47
-tags: [JavaScript, ajax, jQuery]
+tags: [JavaScript, ajax, jQuery, 前端]
 categories: web前端
 ---
 
