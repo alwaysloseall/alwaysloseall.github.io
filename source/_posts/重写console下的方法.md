@@ -5,8 +5,9 @@ tags: [JavaScript, webApi, 前端]
 categories: web前端
 ---
 
-#### 还是最近在做的移动端调试工具，需要重写window.console对象，通过重写可以将之后代码中的控制台输出映射到自己的输出面板中
-上代码，重写的逻辑是很简单的
+#### 实现方式
+还是最近在做的移动端调试工具，需要重写window.console对象，通过重写可以将之后代码中的控制台输出映射到自己的输出面板中。
+上代码，重写的逻辑是很简单的。
 ```javascript
 var tempFunction, color,
     output = document.querySelector('#output');
@@ -58,7 +59,7 @@ for (var key in console) {
     }
 }
 ```
-#### 实现逻辑
+#### 详情解释
 1. ```for (var key in console)``` 遍历console对象，因为console对象下并不是所有方法都需要重写，所以这里用```key.match(/log|debug|error|info|warn|dir/)```筛选出需要重写的方法
 2. ```tempFunction = console[key];``` 用临时遍历保存console下的方法，并根据key更换最后需要显示的颜色
 3. 闭包保留color，直接```console[key] = function () {};```重写console下的方法

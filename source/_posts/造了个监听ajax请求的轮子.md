@@ -8,7 +8,8 @@ categories: web前端
 突发奇想造了个轮子，用于在移动开发，尤其是在微信上开发时不便于调试的问题。其实大部分时候用微信开发者工具都是可以解决的，但是有时也有在实机上测试的需求。
 > 现在已经放在GitHub上了，地址: [https://github.com/alwaysloseall/ajax-watcher](https://github.com/alwaysloseall/ajax-watcher)
 
-#### 核心部分是监听ajax请求的API，现在只做了依赖jQuery的部分
+#### 实现逻辑
+核心部分是监听ajax请求的API，现在只做了依赖jQuery的部分
 ```javascript
     $(document).ajaxSend(function (e, jqXHR, ajaxOptions) {
         if (openStatus) {
@@ -51,4 +52,5 @@ categories: web前端
 ```
 ``` $(document).ajaxSend(callback).ajaxComplete(callback) ``` 用于监听通过jQuery发起的ajax请求
 
-#### 以后要做的部分是用原生js去写这部分功能，通过重写XMLHttpRequest构造函数，在XHR实例的原型上重写open, send, onreadystatechange方法来实现
+#### Others
+以后要做的部分是用原生js去写这部分功能，通过重写XMLHttpRequest构造函数，在XHR实例的原型上重写open, send, onreadystatechange方法来实现
