@@ -38,7 +38,7 @@ for (var key in console) {
                 color = '#1F2D3D';
                 break;
         }
-        (function (color) {
+        (function (color, tempFunction) {
             console[key] = function () {
                 var result = '';
                 for (var i = 0; i < arguments.length; i ++) {
@@ -55,12 +55,12 @@ for (var key in console) {
                 output.appendChild(element);
                 tempFunction.apply(console, arguments);
             }.bind(window);
-        })(color);
+        })(color, tempFunction);
     }
 }
 ```
 #### 详情解释
 1. ```for (var key in console)``` 遍历console对象，因为console对象下并不是所有方法都需要重写，所以这里用```key.match(/log|debug|error|info|warn|dir/)```筛选出需要重写的方法
 2. ```tempFunction = console[key];``` 用临时遍历保存console下的方法，并根据key更换最后需要显示的颜色
-3. 闭包保留color，直接```console[key] = function () {};```重写console下的方法
+3. 闭包保留color和tempFunction，直接```console[key] = function () {};```重写console下的方法
 4. 重写方法的内部实现根据需求来写
