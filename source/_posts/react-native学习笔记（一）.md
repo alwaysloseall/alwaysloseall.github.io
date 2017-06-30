@@ -82,7 +82,7 @@ onPress是button被按下时的时间，在可点击的组件里都可以注册�
 />
 ```
 这一看就能看懂吧。。。效果如图
-![图片](https://alwaysloseall.github.io/image/2017/06/react-native_1.png)
+![图片](https://alwaysloseall.github.io/image/2017/06/react-native_1.PNG)
 
 #### AlertIOS
 这个是针对IOS用的，启动一个允许用户输入的对话框
