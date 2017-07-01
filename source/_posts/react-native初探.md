@@ -1,7 +1,7 @@
 ---
 title: react-native 初探
 date: 2017-06-29 14:29:22
-tags: [JavaScript, webApi, 前端, React-Native]
+tags: [JavaScript, 前端, React-Native]
 categories: React-Native
 ---
 前端圈聊这个react-native也好长一段时间了，以前也写过一段时间react，不是react吹，所以一直没玩这个native，看来我还是naive啊。

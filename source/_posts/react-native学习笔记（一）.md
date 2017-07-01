@@ -1,7 +1,7 @@
 ---
 title: react-native 学习笔记（一）
 date: 2017-06-30 16:02:48
-tags: [JavaScript, webApi, 前端, React-Native]
+tags: [JavaScript, 前端, React-Native]
 categories: React-Native
 ---
 创建好项目之后，现在就可以修改app.js并保存看效果了
