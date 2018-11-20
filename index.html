@@ -260,6 +260,158 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/20/TypeScript with React的一些总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="vldh">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars2.githubusercontent.com/u/20535775?v=3&s=460">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="amazing!!!">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2018/11/20/TypeScript with React的一些总结/" itemprop="url">
+                  TypeScript with React的一些总结
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-20T14:16:05+08:00">
+                2018-11-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/11/20/TypeScript with React的一些总结/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/11/20/TypeScript with React的一些总结/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>久了没更新blog，算下来也有一年多了，这一年作为一个重度依赖React前端工作者，想对自己工作有所总结。所以呢，这一篇文章就用于总结一些 TypeScript with React 的经验吧。</p>
+<h3 id="项目架构"><a href="#项目架构" class="headerlink" title="项目架构"></a>项目架构</h3><p>自从 UmiJS 发布以来，我在公司及个人项目中得到很好的应用。所以这里分享的也是基于此框架建立的解决方案。<br>基本的目录结构：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">umi version: 1.x</div><div class="line">+ dist                // 生产环境构建产物</div><div class="line">+ mock                // mock 文件所在目录，基于 express</div><div class="line">+ node_modules        // 依赖库</div><div class="line">+ src                 </div><div class="line">  + assets              // 资源目录</div><div class="line">  + components          // 组件</div><div class="line">  + layouts             // 布局组件</div><div class="line">    -index.tsx           // 全局布局</div><div class="line">  + models              // dva models</div><div class="line">  + pages               // router page</div><div class="line">  + services            // 通信services</div><div class="line">  + utils               // 工具函数</div><div class="line">  - global.ts             // 可以在这里加入 polyfill</div><div class="line">  - global.less           // 约定的全局样式文件，自动引入</div><div class="line">- .umirc.js</div><div class="line">- .webpackrc.js</div><div class="line">- package.json</div><div class="line">- tsconfig.json</div><div class="line">- typings.d.ts</div></pre></td></tr></table></figure></p>
+<h3 id="文件分析"><a href="#文件分析" class="headerlink" title="文件分析"></a>文件分析</h3><h4 id="tsconfig-json"><a href="#tsconfig-json" class="headerlink" title="tsconfig.json"></a>tsconfig.json</h4><blockquote>
+<p>ts的配置文件</p>
+</blockquote>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"compilerOptions"</span>: &#123;</div><div class="line">      <span class="attr">"target"</span>: <span class="string">"es6"</span>,</div><div class="line">      <span class="attr">"module"</span>: <span class="string">"es6"</span>,</div><div class="line">      <span class="attr">"moduleResolution"</span>: <span class="string">"node"</span>,</div><div class="line">      <span class="attr">"jsx"</span>: <span class="string">"react"</span>,</div><div class="line">      <span class="attr">"baseUrl"</span>: <span class="string">"."</span>,</div><div class="line">      <span class="attr">"paths"</span>: &#123;</div><div class="line">        <span class="attr">"src"</span>: [<span class="string">"src"</span>],</div><div class="line">        <span class="attr">"services/*"</span>: [<span class="string">"src/services/*"</span>],        </div><div class="line">        <span class="attr">"components/*"</span>: [<span class="string">"src/components/*"</span>],</div><div class="line">        <span class="attr">"assets/*"</span>: [<span class="string">"src/assets/*"</span>],</div><div class="line">        <span class="attr">"utils/*"</span>: [<span class="string">"src/utils/*"</span>]</div><div class="line">      &#125;,</div><div class="line">      <span class="attr">"allowSyntheticDefaultImports"</span>: <span class="literal">true</span>,</div><div class="line">      <span class="attr">"experimentalDecorators"</span>: <span class="literal">true</span></div><div class="line">    &#125;</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<h4 id="typings-d-ts"><a href="#typings-d-ts" class="headerlink" title="typings.d.ts"></a>typings.d.ts</h4><figure class="highlight typescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">declare</span> <span class="keyword">module</span> "*.css";</div><div class="line"></div><div class="line">declare <span class="keyword">module</span> "*.less";</div><div class="line"></div><div class="line">declare <span class="keyword">module</span> "*.png";</div><div class="line"></div><div class="line">declare <span class="keyword">module</span> "*.gif";</div><div class="line"></div><div class="line">declare <span class="keyword">module</span> "BMap"; // BMap</div><div class="line"></div><div class="line">declare <span class="keyword">module</span> "BMapLib"; // BMapLib</div><div class="line"></div><div class="line">interface Window &#123; <span class="comment">// umi允许通过window.g_app 访问store</span></div><div class="line">    g_app: &#123;</div><div class="line">        _store: &#123;</div><div class="line">            dispatch: <span class="built_in">Function</span>,</div><div class="line">            getState: <span class="built_in">Function</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">interface</span> Array&lt;T&gt; &#123; <span class="comment">// 使用中发现这个函数会报错？？？</span></div><div class="line">    includes: <span class="function">(<span class="params">item: T</span>) =&gt;</span> <span class="built_in">boolean</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="编写一个标准的React-Component"><a href="#编写一个标准的React-Component" class="headerlink" title="编写一个标准的React Component"></a>编写一个标准的React Component</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">+ MyComponent</div><div class="line">  + __snapshots__ // 测试快照</div><div class="line">    - index.react.test.tsx.snap // 快照文件</div><div class="line">  - index.tsx</div><div class="line">  - index.less // 组件样式，采用的css module</div><div class="line">  - index.react.test.tsx // jest test</div><div class="line">  - PropsType.ts</div></pre></td></tr></table></figure>
+<p>PropsType.ts<br><figure class="highlight typescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">interface</span> PropsType &#123;</div><div class="line">    style?: React.CSSProperties, <span class="comment">// 父容器style</span></div><div class="line">    headstyle?: React.CSSProperties, <span class="comment">// 头部样式</span></div><div class="line">    titleTextstyle?: React.CSSProperties, <span class="comment">// 标题文字样式</span></div><div class="line">    iconImg?: <span class="built_in">string</span>, <span class="comment">// 图标图片</span></div><div class="line">    color?: <span class="built_in">string</span>,</div><div class="line">    title?: <span class="built_in">string</span>,</div><div class="line">    children?: React.ReactNode,</div><div class="line">    right?: React.ReactNode, <span class="comment">// 右侧内容</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> PropsType;</div></pre></td></tr></table></figure></p>
+<p>index.tsx</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">import React from &apos;react&apos;;</div><div class="line">import styles from &quot;./index.less&quot;;</div><div class="line"></div><div class="line">import PropsType from &quot;./PropsType&quot;;</div><div class="line"></div><div class="line">export default (&#123; style, headstyle, titleTextstyle, iconImg, color, title, children, right &#125;: PropsType) =&gt; &#123;</div><div class="line">    return (</div><div class="line">        &lt;div className=&#123;styles.container&#125; style=&#123;style&#125;&gt;</div><div class="line">            &lt;div className=&#123;styles.head&#125; style=&#123;headstyle&#125;&gt;</div><div class="line">                &#123;</div><div class="line">                    title ?</div><div class="line">                        &lt;div className=&#123;styles.title&#125;&gt;</div><div class="line">                            &#123;</div><div class="line">                                iconImg ?</div><div class="line">                                    &lt;img</div><div class="line">                                        className=&#123;styles.iconImg&#125;</div><div class="line">                                        src=&#123;iconImg&#125;</div><div class="line">                                    /&gt;</div><div class="line">                                    :</div><div class="line">                                    &lt;span className=&#123;styles.icon&#125; style=&#123;&#123; backgroundColor: color || &quot;#2f81f8&quot; &#125;&#125;&gt;</div><div class="line">                                    &lt;/span&gt;</div><div class="line">                            &#125;</div><div class="line">                            &lt;span className=&#123;styles.titleText&#125; style=&#123;titleTextstyle&#125;&gt;&#123;title&#125;&lt;/span&gt;</div><div class="line">                        &lt;/div&gt;</div><div class="line">                        :</div><div class="line">                        &lt;div&gt;&lt;/div&gt;</div><div class="line">                &#125;</div><div class="line">                &lt;div className=&#123;styles.right&#125;&gt;</div><div class="line">                    &#123;right&#125;</div><div class="line">                &lt;/div&gt;</div><div class="line">            &lt;/div&gt;</div><div class="line">            &lt;div className=&#123;styles.content&#125;&gt;</div><div class="line">                &#123;children&#125;</div><div class="line">            &lt;/div&gt;</div><div class="line">        &lt;/div&gt;</div><div class="line">    );</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>index.react.test.tsx</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">import React from &quot;react&quot;;</div><div class="line">import CustomIconList from &quot;./index&quot;;</div><div class="line">import renderer from &quot;react-test-renderer&quot;;</div><div class="line"></div><div class="line">test(&quot;CustomIconList render&quot;, () =&gt; &#123;</div><div class="line">    const component = renderer.create(</div><div class="line">        &lt;CustomIconList</div><div class="line">            style=&#123;&#123; height: 200 &#125;&#125;</div><div class="line">            headstyle=&#123;&#123; backgroundColor: &quot;#0f0&quot; &#125;&#125;</div><div class="line">            iconImg=&quot;icon-test&quot;</div><div class="line">            color=&quot;#f00&quot;</div><div class="line">            title=&quot;test title&quot;</div><div class="line">            titleTextstyle=&#123;&#123; fontSize: 12 &#125;&#125;</div><div class="line">            right=&#123;&lt;span&gt;test right&lt;/span&gt;&#125;</div><div class="line">        &gt;</div><div class="line">            &lt;span&gt;test children&lt;/span&gt;</div><div class="line">        &lt;/CustomIconList&gt;</div><div class="line">    ).toJSON();</div><div class="line">    expect(component).toMatchSnapshot();</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h4 id="页面基类的定义"><a href="#页面基类的定义" class="headerlink" title="页面基类的定义"></a>页面基类的定义</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div></pre></td><td class="code"><pre><div class="line">import React, &#123; Component &#125; from &quot;react&quot;;</div><div class="line">import router from &apos;umi/router&apos;;</div><div class="line">import qs from &quot;qs&quot;;</div><div class="line">import moment from &apos;moment&apos;;</div><div class="line"></div><div class="line">import &#123; RouteComponentProps &#125; from &apos;react-router&apos;;</div><div class="line">import &#123; FormComponentProps &#125; from &apos;antd/lib/form&apos;;</div><div class="line">import &#123; DispatchProp &#125; from &apos;react-redux&apos;;</div><div class="line"></div><div class="line">interface PageComponentInterface&lt;P = &#123;&#125;, S = &#123;&#125;, SS = any&gt; extends Component&lt;P, S, SS&gt; &#123;</div><div class="line">    </div><div class="line">&#125;</div><div class="line"></div><div class="line">interface PropsType extends RouteComponentProps&lt;any&gt;, FormComponentProps, DispatchProp&lt;any&gt;&#123;</div><div class="line">    </div><div class="line">&#125;</div><div class="line"></div><div class="line">export default class PageComponent&lt;P extends PropsType, S&gt; extends Component&lt;P, S&gt; implements PageComponentInterface&lt;P, S&gt; &#123;</div><div class="line"></div><div class="line">    public searchParams = qs.parse(this.props.location.search, &#123; ignoreQueryPrefix: true &#125;);</div><div class="line"></div><div class="line">    goBackHandle = () =&gt; &#123;</div><div class="line">        router.goBack();</div><div class="line">    &#125;;</div><div class="line"></div><div class="line">    searchResetHandle = () =&gt; &#123;</div><div class="line">		this.props.form.resetFields();</div><div class="line">		router.push(`?`);</div><div class="line">    &#125;;</div><div class="line">    </div><div class="line">	searchBtnHandle = (e: React.MouseEvent) =&gt; &#123;</div><div class="line">        e.preventDefault();</div><div class="line">		this.props.form.validateFields((error, values: Object) =&gt; &#123;</div><div class="line">			if (!error) &#123;</div><div class="line">                Object.keys(values).forEach(key =&gt; &#123;</div><div class="line">                    if (moment.isMoment(values[key])) &#123;</div><div class="line">                        values[key] = (values[key] as moment.Moment).valueOf();</div><div class="line">                    &#125;</div><div class="line">                &#125;);</div><div class="line">				router.push(`?$&#123;qs.stringify(&#123;</div><div class="line">					...values,</div><div class="line">                &#125;)&#125;`);</div><div class="line">			&#125;</div><div class="line">		&#125;);</div><div class="line">    &#125;;</div><div class="line">    </div><div class="line">	handlePaginationChange = (page, pageSize) =&gt; &#123;</div><div class="line">		const oldParams = qs.parse(this.props.location.search, &#123; ignoreQueryPrefix: true &#125;);</div><div class="line">		const newParams = &#123; ...oldParams, pageIndex: page, pageSize: pageSize &#125;;</div><div class="line">		if (oldParams.pageSize &amp;&amp; oldParams.pageSize != pageSize) &#123;</div><div class="line">			newParams.pageIndex = 1;</div><div class="line">		&#125;</div><div class="line">		router.push(`?$&#123;qs.stringify(newParams)&#125;`);</div><div class="line">    &#125;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>使用方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">import &#123;connect&#125; from &apos;dva&apos;;</div><div class="line">import React from &quot;react&quot;;</div><div class="line"></div><div class="line">@connect((&#123; tradePlan, loading &#125;) =&gt; (&#123;</div><div class="line">    list: tradePlan.list,</div><div class="line">    pagination: tradePlan.pagination,</div><div class="line">    loading: loading.effects[&apos;tradePlan/queryList&apos;]</div><div class="line">&#125;))</div><div class="line">class Index extends PageComponent&lt;PropsType, StateType&gt; &#123;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>实例上就会挂载基类上的方法</p>
+<h4 id="工具类的应用"><a href="#工具类的应用" class="headerlink" title="工具类的应用"></a>工具类的应用</h4><p>validator.ts</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">interface</span> NumberRegClass &#123;</div><div class="line">    </div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">interface</span> NumberRegConstructorOptions &#123;</div><div class="line">    positive: <span class="built_in">boolean</span> <span class="comment">//正数</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">export</span> <span class="keyword">class</span> NumberReg <span class="keyword">extends</span> <span class="built_in">RegExp</span> <span class="keyword">implements</span> NumberRegClass &#123;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * @param  &#123;number&#125; int 整数位</div><div class="line">     * @param  &#123;number&#125; decimals 小数位</div><div class="line">     * @param  &#123;NumberRegConstructorOptions&#125; options? 参数</div><div class="line">     */</div><div class="line">    <span class="keyword">constructor</span>(<span class="params">int: <span class="built_in">number</span>, decimals: <span class="built_in">number</span>, options?: NumberRegConstructorOptions</span>) &#123;</div><div class="line">        <span class="keyword">const</span> &#123; positive = <span class="literal">false</span> &#125; = options || &#123;&#125;;</div><div class="line">        <span class="keyword">super</span>(<span class="string">`^(<span class="subst">$&#123;positive ? '' : '\\-?'&#125;</span>)([1-9]\\d&#123;0,<span class="subst">$&#123;int - 1&#125;</span>&#125;|0)<span class="subst">$&#123;decimals ? `(\\.\\d&#123;0,$&#123;decimals - 1&#125;</span>&#125;[1-9])`</span> : <span class="string">''</span>&#125;?$<span class="string">`);</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 验证bit位的整数</div><div class="line">     * @param  &#123;number&#125; bit 整数位数</div><div class="line">     * @returns RegExp</div><div class="line">     */</div><div class="line">    static int(bit: number): RegExp &#123; //整数</div><div class="line">        return new RegExp(`^(\\-?[<span class="number">1</span><span class="number">-9</span>]\\d&#123;<span class="number">0</span>,$&#123;bit - <span class="number">1</span>&#125;&#125;|<span class="number">0</span>)$<span class="string">`);</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>validator.test.ts</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> &#123; NumberReg &#125; <span class="keyword">from</span> <span class="string">'./validator'</span>;</div><div class="line"></div><div class="line"><span class="comment">/// &lt;reference types="jest" /&gt;</span></div><div class="line"></div><div class="line">test(<span class="string">'NumberReg test'</span>, <span class="function"><span class="params">()</span> =&gt;</span> &#123; <span class="comment">// 数字正则</span></div><div class="line">    <span class="keyword">const</span> number5and4 = <span class="keyword">new</span> NumberReg(<span class="number">5</span>, <span class="number">4</span>);</div><div class="line">    expect(number5and4.test(<span class="string">'12345.1234'</span>)).toBe(<span class="literal">true</span>);</div><div class="line">    expect(number5and4.test(<span class="string">'-12345.1234'</span>)).toBe(<span class="literal">true</span>);</div><div class="line">    expect(number5and4.test(<span class="string">'0.1234'</span>)).toBe(<span class="literal">true</span>);</div><div class="line">    expect(number5and4.test(<span class="string">'-0.1234'</span>)).toBe(<span class="literal">true</span>);</div><div class="line">    expect(number5and4.test(<span class="string">'12345.12345'</span>)).toBe(<span class="literal">false</span>);</div><div class="line">    expect(number5and4.test(<span class="string">'12345.120'</span>)).toBe(<span class="literal">false</span>);</div><div class="line">    expect(number5and4.test(<span class="string">'123456.12'</span>)).toBe(<span class="literal">false</span>);</div><div class="line">    expect(number5and4.test(<span class="string">'-123456.12'</span>)).toBe(<span class="literal">false</span>);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>以上，是部分运用在TypeScript with React的小结而已，感觉通篇的代码也贴得太多了。（然而还有很多不知道怎么描述。<br>总之，就是让可复用的组件能够独立的进行编写，测试。<br>为所有的工具类函数提供unit test，才能更完善的服务于业务。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/15/nodejs addon Hello,World/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1742,166 +1894,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/26/造了个监听ajax请求的轮子/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="vldh">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars2.githubusercontent.com/u/20535775?v=3&s=460">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="amazing!!!">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/06/26/造了个监听ajax请求的轮子/" itemprop="url">
-                  造了个监听ajax请求的轮子
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-26T19:48:47+08:00">
-                2017-06-26
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/web前端/" itemprop="url" rel="index">
-                    <span itemprop="name">web前端</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/06/26/造了个监听ajax请求的轮子/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/06/26/造了个监听ajax请求的轮子/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>突发奇想造了个轮子，用于在移动开发，尤其是在微信上开发时不便于调试的问题。其实大部分时候用微信开发者工具都是可以解决的，但是有时也有在实机上测试的需求。</p>
-<blockquote>
-<p>现在已经放在GitHub上了，地址: <a href="https://github.com/alwaysloseall/ajax-watcher" target="_blank" rel="external">https://github.com/alwaysloseall/ajax-watcher</a></p>
-</blockquote>
-<h4 id="实现逻辑"><a href="#实现逻辑" class="headerlink" title="实现逻辑"></a>实现逻辑</h4><p>核心部分是监听ajax请求的API，现在只做了依赖jQuery的部分<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">$(<span class="built_in">document</span>).ajaxSend(<span class="function"><span class="keyword">function</span> (<span class="params">e, jqXHR, ajaxOptions</span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span> (openStatus) &#123;</div><div class="line">        DOM.mask.show();</div><div class="line">        DOM.container.show();</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span> (container.find(<span class="string">'div[url="'</span>+ajaxOptions.url+<span class="string">'"]'</span>).length) &#123;</div><div class="line">        container.find(<span class="string">'div[url="'</span>+ajaxOptions.url+<span class="string">'"]'</span>).remove();</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">var</span> content = $(</div><div class="line">        <span class="string">'&lt;div class="ajax-watcher-content" url='</span>+ ajaxOptions.url +<span class="string">' style="display: inline-block; overflow: auto; color: #fff; max-width: 45%; border: 1px solid #fff; padding: 10px; position: relative; height: 40%; word-wrap: break-word; word-break: normal;"&gt;\</span></div><div class="line">            &lt;span style="color: #fff; position: absolute; top: 0; right: 5px;"&gt;关闭&lt;/span&gt;\</div><div class="line">            &lt;p style="color: #fff;"&gt;url:&lt;/br&gt;'+ajaxOptions.url+<span class="string">'&lt;/p&gt;\</span></div><div class="line">            &lt;p style="color: #fff;"&gt;type:  '+ajaxOptions.type+<span class="string">'&lt;/p&gt;\</span></div><div class="line">            &lt;p style="color: #fff;"&gt;params:&lt;/br&gt;'+ajaxOptions.data.replace(<span class="regexp">/\&amp;/g</span>, <span class="string">'&lt;/br&gt;'</span>)+<span class="string">'&lt;/p&gt;\</span></div><div class="line">            &lt;p style="color: #fff;"&gt;status:  loadding...&lt;/p&gt;\</div><div class="line">        &lt;/div&gt;'</div><div class="line">    );</div><div class="line">    DOM.container.append(content);</div><div class="line">    content.children(<span class="string">'span'</span>).on(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">        content.remove();</div><div class="line">    &#125;);</div><div class="line">&#125;).ajaxComplete(<span class="function"><span class="keyword">function</span> (<span class="params">e, xhr, settings</span>) </span>&#123;             </div><div class="line">    <span class="keyword">var</span> content = container.find(<span class="string">'div[url="'</span>+settings.url+<span class="string">'"]'</span>);</div><div class="line">    content.find(<span class="string">'p:eq(3)'</span>).html(<span class="string">'status:  '</span>+xhr.status+<span class="string">''</span>);</div><div class="line">    <span class="keyword">var</span> json = $(<span class="string">'&lt;div style="color: #fff;"&gt;&lt;/div&gt;'</span>);</div><div class="line">    <span class="keyword">if</span> (xhr.responseJSON) &#123;</div><div class="line">        json.JSONView(xhr.responseJSON);</div><div class="line">        content.append(<span class="string">'&lt;p style="color: #fff;"&gt;response:  &lt;/p&gt;'</span>);</div><div class="line">        content.append(json);</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        content.append(</div><div class="line">            <span class="string">'&lt;p style="color: #fff;"&gt;responseText:  '</span>+xhr.responseText+<span class="string">'&lt;/p&gt;'</span></div><div class="line">        );</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span> (xhr.responseJSON) &#123;</div><div class="line">        <span class="comment">//ToDo</span></div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
-<p><code>$(document).ajaxSend(callback).ajaxComplete(callback)</code> 用于监听通过jQuery发起的ajax请求</p>
-<h4 id="Others"><a href="#Others" class="headerlink" title="Others"></a>Others</h4><p>以后要做的部分是用原生js去写这部分功能，通过重写XMLHttpRequest构造函数，在XHR实例的原型上重写open, send, onreadystatechange方法来实现</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1951,7 +1943,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-count">13</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1973,7 +1965,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-count">12</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
