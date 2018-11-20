@@ -260,6 +260,159 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/23/一个运行在node上的mysql数据库查询工具库/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="vldh">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars2.githubusercontent.com/u/20535775?v=3&s=460">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="amazing!!!">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/06/23/一个运行在node上的mysql数据库查询工具库/" itemprop="url">
+                  一个运行在node上的mysql数据库查询工具库
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-23T16:46:17+08:00">
+                2017-06-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/NodeJs/" itemprop="url" rel="index">
+                    <span itemprop="name">NodeJs</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/06/23/一个运行在node上的mysql数据库查询工具库/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/06/23/一个运行在node上的mysql数据库查询工具库/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> mysqlobj = <span class="built_in">require</span>(<span class="string">'mysql'</span>);</div><div class="line">    <span class="keyword">var</span> <span class="keyword">async</span> = <span class="built_in">require</span>(<span class="string">'async'</span>);</div><div class="line"></div><div class="line">    <span class="keyword">var</span> pool = mysqlobj.createPool(&#123;</div><div class="line">        <span class="attr">host</span>: <span class="string">'host'</span>,</div><div class="line">        <span class="attr">user</span>: <span class="string">'user'</span>,</div><div class="line">        <span class="attr">password</span>: <span class="string">'password'</span>,</div><div class="line">        <span class="attr">database</span>: <span class="string">"databases"</span>,</div><div class="line">        <span class="comment">//debug: true,</span></div><div class="line">    &#125;);</div><div class="line">    <span class="keyword">return</span> &#123;</div><div class="line">        <span class="attr">pool</span>:pool,</div><div class="line">        <span class="attr">query</span>:<span class="function"><span class="keyword">function</span>(<span class="params">sql, param, callback</span>)</span>&#123;</div><div class="line">            <span class="keyword">if</span>(<span class="keyword">typeof</span> param == <span class="string">"function"</span>)&#123;</div><div class="line">                callback = param;</div><div class="line">                param = [];</div><div class="line">            &#125;</div><div class="line">            pool.getConnection(<span class="function"><span class="keyword">function</span>(<span class="params">err, connection</span>) </span>&#123;</div><div class="line">                <span class="keyword">if</span>(err)&#123;</div><div class="line">                    callback(err, [])</div><div class="line">                    <span class="keyword">return</span>;</div><div class="line">                    </div><div class="line">                &#125;</div><div class="line">                <span class="keyword">try</span>&#123;</div><div class="line">                    connection.query( sql, param, <span class="function"><span class="keyword">function</span>(<span class="params">err, rows</span>) </span>&#123;</div><div class="line">                        connection.release();</div><div class="line">                        callback(err, rows)</div><div class="line">                    &#125;);</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">catch</span>(e)&#123;</div><div class="line">                    <span class="built_in">console</span>.log(<span class="string">"数据库查询出错了："</span>+sql);</div><div class="line">                    <span class="built_in">console</span>.log(param);</div><div class="line">                    <span class="built_in">console</span>.log(e);</div><div class="line">                    </div><div class="line">                    callback(<span class="string">"err"</span>, <span class="literal">null</span>)</div><div class="line">                &#125;</div><div class="line">            &#125;);</div><div class="line">        &#125;,</div><div class="line">        <span class="comment">/*</span></div><div class="line">        sqlParamsArr:[</div><div class="line">            &#123;</div><div class="line">                sql:"update table set .......",</div><div class="line">                params:[p1,p2],</div><div class="line">            &#125;</div><div class="line">        ]</div><div class="line">        */</div><div class="line">        startTransaction:<span class="function"><span class="keyword">function</span>(<span class="params">sqlParamsArr, callback</span>)</span>&#123;</div><div class="line">            pool.getConnection(<span class="function"><span class="keyword">function</span>(<span class="params">err, connection</span>) </span>&#123;</div><div class="line">                <span class="keyword">if</span>(err)&#123;</div><div class="line">                    callback(err, [])</div><div class="line">                    <span class="keyword">return</span>;</div><div class="line">                &#125;</div><div class="line">                </div><div class="line">                asyncCallFunctionList = [];</div><div class="line">                <span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>; i&lt;sqlParamsArr.length; i++)&#123;</div><div class="line">                    asyncCallFunctionList.push(<span class="function"><span class="keyword">function</span>(<span class="params">ii</span>)</span>&#123;</div><div class="line">                        <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">callbackInner</span>)</span>&#123;</div><div class="line">                            connection.query(sqlParamsArr[ii].sql,sqlParamsArr[ii].params , callbackInner);</div><div class="line">                        &#125;</div><div class="line">                    &#125;(i));</div><div class="line">                &#125;</div><div class="line">                </div><div class="line">                <span class="keyword">try</span>&#123;</div><div class="line">                    </div><div class="line">                    </div><div class="line">                    connection.beginTransaction(<span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</div><div class="line">                        <span class="keyword">if</span>(err) &#123;</div><div class="line">                            callback(<span class="string">"err"</span>);</div><div class="line">                        &#125;</div><div class="line">                        <span class="keyword">async</span>.series(asyncCallFunctionList, <span class="function"><span class="keyword">function</span>(<span class="params">err, result</span>) </span>&#123;</div><div class="line">                            <span class="keyword">if</span>(err) &#123;</div><div class="line">                                connection.rollback(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">                                    callback(<span class="string">"err"</span>);</div><div class="line">                                &#125;);</div><div class="line">                                <span class="keyword">return</span> ;</div><div class="line">                            &#125;</div><div class="line">                            <span class="comment">// 提交事务</span></div><div class="line">                            connection.commit(<span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</div><div class="line">                                <span class="keyword">if</span> (err) &#123; </div><div class="line">                                    connection.rollback(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">                                        callback(<span class="string">"err"</span>);</div><div class="line">                                    &#125;);</div><div class="line">                                &#125;</div><div class="line">                                <span class="built_in">console</span>.log(<span class="string">'事务提交成功!'</span>);</div><div class="line">                                callback(<span class="literal">null</span>);</div><div class="line">                            &#125;);</div><div class="line">                        &#125;);</div><div class="line">                &#125;);</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">catch</span>(e)&#123;</div><div class="line">                    <span class="built_in">console</span>.log(<span class="string">"数据库查询出错了（事务处理）："</span>+sqlParamsArr);</div><div class="line">                    </div><div class="line">                    <span class="built_in">console</span>.log(e);</div><div class="line">                    callback(<span class="string">"err"</span>, <span class="literal">null</span>)</div><div class="line">                &#125;</div><div class="line">            &#125;);</div><div class="line">        &#125;,</div><div class="line">        <span class="attr">execSql</span>:<span class="function"><span class="keyword">function</span>(<span class="params">sql, param, callback</span>)</span>&#123;</div><div class="line">            </div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;()</div></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/22/第一篇文章/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -437,7 +590,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">12</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -459,7 +612,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-count">10</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
