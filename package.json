@@ -6,8 +6,10 @@
     "version": "3.3.7"
   },
   "scripts": {
-    "start": "hexo s",
-    "g": "hexo g"
+    "s": "hexo s",
+    "g": "hexo g",
+    "d": "hexo d",
+    "new": "hexo new"
   },
   "dependencies": {
     "hexo": "^3.2.0",
