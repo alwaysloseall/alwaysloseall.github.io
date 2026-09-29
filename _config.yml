@@ -76,6 +76,10 @@ theme: next
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
+## 推送到 hexo 后由 .github/workflows/deploy.yml 发布：
+## peaceiris/actions-gh-pages 把 public/ 强制推到 master，
+## 另外 rsync 到 nekodayo:/var/www/blog。
+## 下面这段只给本机 `npx hexo deploy` 用，只会更新 master。
 deploy:
   type: git
   # HTTPS：云端环境没有 SSH key。本机若已配置 SSH，可改回
