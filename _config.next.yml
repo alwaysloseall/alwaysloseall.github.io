@@ -1,0 +1,34 @@
+# NexT 8 备用配置，会覆盖 node_modules/hexo-theme-next 里的默认值。
+# 站点身份沿用 2018-11-20 线上站：Pisces、菜单、头像、社交链接、Disqus。
+
+scheme: Pisces
+# 最新主题默认开启暗色。原来的站点是浅色，这里关掉。
+darkmode: false
+
+menu:
+  home: / || fa fa-home
+  categories: /categories/ || fa fa-th
+  archives: /archives/ || fa fa-archive
+  tags: /tags/ || fa fa-tags
+
+avatar:
+  url: https://avatars2.githubusercontent.com/u/20535775?v=3&s=460
+  rounded: true
+
+social:
+  GitHub: https://github.com/alwaysloseall || fab fa-github
+  weibo: http://weibo.com/alwaysloseall || fab fa-weibo
+
+footer:
+  since: 2017
+
+disqus:
+  enable: true
+  shortname: alwaysloseall
+  count: true
+
+comments:
+  active: disqus
+
+custom_file_path:
+  head: source/_data/head.njk
