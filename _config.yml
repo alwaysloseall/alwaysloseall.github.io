@@ -12,7 +12,7 @@ timezone: Asia/Shanghai
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://yoursite.com
+url: https://alwaysloseall.github.io
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -69,7 +69,12 @@ theme: next
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: git@github.com:alwaysloseall/alwaysloseall.github.io.git
+  # HTTPS：云端环境没有 SSH key。本机若已配置 SSH，可改回
+  # git@github.com:alwaysloseall/alwaysloseall.github.io.git
+  # 并保留 branch: master。
+  repo: https://github.com/alwaysloseall/alwaysloseall.github.io.git
+  branch: master
+  message: "Site updated: {{ now('YYYY-MM-DD HH:mm:ss') }}"
 
-# 评论
-disqus_shortname: alwayslosall
+# 评论（NexT 实际读取的是主题配置，见 scripts/next-live-settings.js）
+disqus_shortname: alwaysloseall
