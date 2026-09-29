@@ -7,7 +7,7 @@ title: amazing!!!
 subtitle: 哀吾生之须臾，羡长江之无穷
 description: 一个在浅色床单上哭泣的失败者的博客
 author: vldh
-language: zh-Hans
+language: zh-CN
 timezone: Asia/Shanghai
 
 # URL
@@ -16,6 +16,9 @@ url: https://alwaysloseall.github.io
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
+pretty_urls:
+  trailing_index: true
+  trailing_html: true
 
 # Directory
 source_dir: source
@@ -31,17 +34,23 @@ skip_render:
 new_post_name: :title.md # File name of new posts
 default_layout: post
 titlecase: false # Transform title into titlecase
-external_link: true # Open external links in new tab
+external_link:
+  enable: true
+  field: site
+  exclude: ''
 filename_case: 0
 render_drafts: false
 post_asset_folder: false
 relative_link: false
 future: true
+# 不用文件修改时间充当文章 updated，避免克隆后全部显示成今天
+updated_option: empty
+syntax_highlighter: highlight.js
 highlight:
-  enable: true
-  line_number: true
   auto_detect: false
-  tab_replace:
+  line_number: true
+  tab_replace: ''
+  wrap: true
 
 # Category & Tag
 default_category: uncategorized
@@ -76,5 +85,5 @@ deploy:
   branch: master
   message: "Site updated: {{ now('YYYY-MM-DD HH:mm:ss') }}"
 
-# 评论（NexT 实际读取的是主题配置，见 scripts/next-live-settings.js）
+# 评论。NexT 8 读的是 _config.next.yml 里的 disqus.shortname
 disqus_shortname: alwaysloseall
