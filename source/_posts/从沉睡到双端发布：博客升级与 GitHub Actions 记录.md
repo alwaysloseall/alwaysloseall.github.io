@@ -41,7 +41,7 @@ categories: 博客运维
 
 两件小事先搁着：
 
-- 《react-native学习笔记（一）》里有一张 `react-native_1.PNG`，地址 404。图文件不在仓库里，这篇没去改那篇文章。
+- 《react-native学习笔记（一）》引用的是 `react-native_1.PNG`，仓库里的文件是 `react-native_1.png`。扩展名大小写对不上，线上那张图 404。这篇没改旧文。
 - 重新生成时，要是拿文件修改时间当文章的 updated，「更新于」会看起来像刚改过。`_config.yml` 里把 `updated_option` 设成了 `empty`，避免一克隆，日期集体变成今天。
 
 ## 为什么两边一起发
