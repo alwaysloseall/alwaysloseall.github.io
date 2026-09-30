@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"alwaysloseall.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null,"activeClass":"disqus"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="久了没更新blog，算下来也有一年多了，这一年作为一个重度依赖React前端工作者，想对自己工作有所总结。所以呢，这一篇文章就用于总结一些 TypeScript with React 的经验吧。 项目架构自从 UmiJS 发布以来，我在公司及个人项目中得到很好的应用。所以这里分享的也是基于此框架建立的解决方案。基本的目录结构： 1234567891011121314151617181920umi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TypeScript with React的一些总结">
+<meta property="og:url" content="https://alwaysloseall.github.io/2018/11/20/TypeScript%20with%20React%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%BB%E7%BB%93/index.html">
+<meta property="og:site_name" content="amazing!!!">
+<meta property="og:description" content="久了没更新blog，算下来也有一年多了，这一年作为一个重度依赖React前端工作者，想对自己工作有所总结。所以呢，这一篇文章就用于总结一些 TypeScript with React 的经验吧。 项目架构自从 UmiJS 发布以来，我在公司及个人项目中得到很好的应用。所以这里分享的也是基于此框架建立的解决方案。基本的目录结构： 1234567891011121314151617181920umi">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-11-20T06:16:05.000Z">
+<meta property="article:author" content="vldh">
+<meta property="article:tag" content="React">
+<meta property="article:tag" content="TypeScript">
+<meta property="article:tag" content="前端">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://alwaysloseall.github.io/2018/11/20/TypeScript%20with%20React%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%BB%E7%BB%93/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://alwaysloseall.github.io/2018/11/20/TypeScript%20with%20React%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%BB%E7%BB%93/","path":"2018/11/20/TypeScript with React的一些总结/","title":"TypeScript with React的一些总结"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>TypeScript with React的一些总结 | amazing!!!</title>
+  
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+<meta name="keywords" content="vldh, alwaysloseall, blog, 失败者, 勃学">
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">amazing!!!</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">哀吾生之须臾，羡长江之无穷</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E6%9E%B6%E6%9E%84"><span class="nav-number">1.</span> <span class="nav-text">项目架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E5%88%86%E6%9E%90"><span class="nav-number">2.</span> <span class="nav-text">文件分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#tsconfig-json"><span class="nav-number">2.1.</span> <span class="nav-text">tsconfig.json</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#typings-d-ts"><span class="nav-number">2.2.</span> <span class="nav-text">typings.d.ts</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AA%E6%A0%87%E5%87%86%E7%9A%84React-Component"><span class="nav-number">2.3.</span> <span class="nav-text">编写一个标准的React Component</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%A1%B5%E9%9D%A2%E5%9F%BA%E7%B1%BB%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="nav-number">2.4.</span> <span class="nav-text">页面基类的定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B7%A5%E5%85%B7%E7%B1%BB%E7%9A%84%E5%BA%94%E7%94%A8"><span class="nav-number">2.5.</span> <span class="nav-text">工具类的应用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="vldh"
+      src="https://avatars2.githubusercontent.com/u/20535775?v=3&s=460">
+  <p class="site-author-name" itemprop="name">vldh</p>
+  <div class="site-description" itemprop="description">一个在浅色床单上哭泣的失败者的博客</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/alwaysloseall" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;alwaysloseall" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="http://weibo.com/alwaysloseall" title="weibo → http:&#x2F;&#x2F;weibo.com&#x2F;alwaysloseall" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>weibo</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://alwaysloseall.github.io/2018/11/20/TypeScript%20with%20React%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%BB%E7%BB%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars2.githubusercontent.com/u/20535775?v=3&s=460">
+      <meta itemprop="name" content="vldh">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="amazing!!!">
+      <meta itemprop="description" content="一个在浅色床单上哭泣的失败者的博客">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="TypeScript with React的一些总结 | amazing!!!">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          TypeScript with React的一些总结
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-11-20 14:16:05" itemprop="dateCreated datePublished" datetime="2018-11-20T14:16:05+08:00">2018-11-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-09-30 10:11:41" itemprop="dateModified" datetime="2026-09-30T02:11:41+00:00">2026-09-30</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2018/11/20/TypeScript%20with%20React%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%BB%E7%BB%93/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/11/20/TypeScript with React的一些总结/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>久了没更新blog，算下来也有一年多了，这一年作为一个重度依赖React前端工作者，想对自己工作有所总结。所以呢，这一篇文章就用于总结一些 TypeScript with React 的经验吧。</p>
+<h3 id="项目架构"><a href="#项目架构" class="headerlink" title="项目架构"></a>项目架构</h3><p>自从 UmiJS 发布以来，我在公司及个人项目中得到很好的应用。所以这里分享的也是基于此框架建立的解决方案。<br>基本的目录结构：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">umi version: 1.x</span><br><span class="line">+ dist                // 生产环境构建产物</span><br><span class="line">+ mock                // mock 文件所在目录，基于 express</span><br><span class="line">+ node_modules        // 依赖库</span><br><span class="line">+ src                 </span><br><span class="line">  + assets              // 资源目录</span><br><span class="line">  + components          // 组件</span><br><span class="line">  + layouts             // 布局组件</span><br><span class="line">    -index.tsx           // 全局布局</span><br><span class="line">  + models              // dva models</span><br><span class="line">  + pages               // router page</span><br><span class="line">  + services            // 通信services</span><br><span class="line">  + utils               // 工具函数</span><br><span class="line">  - global.ts             // 可以在这里加入 polyfill</span><br><span class="line">  - global.less           // 约定的全局样式文件，自动引入</span><br><span class="line">- .umirc.js</span><br><span class="line">- .webpackrc.js</span><br><span class="line">- package.json</span><br><span class="line">- tsconfig.json</span><br><span class="line">- typings.d.ts</span><br></pre></td></tr></table></figure>
+
+<h3 id="文件分析"><a href="#文件分析" class="headerlink" title="文件分析"></a>文件分析</h3><h4 id="tsconfig-json"><a href="#tsconfig-json" class="headerlink" title="tsconfig.json"></a>tsconfig.json</h4><blockquote>
+<p>ts的配置文件</p>
+</blockquote>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;compilerOptions&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;target&quot;</span><span class="punctuation">:</span> <span class="string">&quot;es6&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;module&quot;</span><span class="punctuation">:</span> <span class="string">&quot;es6&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;moduleResolution&quot;</span><span class="punctuation">:</span> <span class="string">&quot;node&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;jsx&quot;</span><span class="punctuation">:</span> <span class="string">&quot;react&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;baseUrl&quot;</span><span class="punctuation">:</span> <span class="string">&quot;.&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;paths&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;src&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;src&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;services/*&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;src/services/*&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span>        </span><br><span class="line">        <span class="attr">&quot;components/*&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;src/components/*&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;assets/*&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;src/assets/*&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;utils/*&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;src/utils/*&quot;</span><span class="punctuation">]</span></span><br><span class="line">      <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;allowSyntheticDefaultImports&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;experimentalDecorators&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="typings-d-ts"><a href="#typings-d-ts" class="headerlink" title="typings.d.ts"></a>typings.d.ts</h4><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">declare</span> <span class="variable language_">module</span> <span class="string">&quot;*.css&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">declare</span> <span class="variable language_">module</span> <span class="string">&quot;*.less&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">declare</span> <span class="variable language_">module</span> <span class="string">&quot;*.png&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">declare</span> <span class="variable language_">module</span> <span class="string">&quot;*.gif&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">declare</span> <span class="variable language_">module</span> <span class="string">&quot;BMap&quot;</span>; <span class="comment">// BMap</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">declare</span> <span class="variable language_">module</span> <span class="string">&quot;BMapLib&quot;</span>; <span class="comment">// BMapLib</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">Window</span> &#123; <span class="comment">// umi允许通过window.g_app 访问store</span></span><br><span class="line">    <span class="attr">g_app</span>: &#123;</span><br><span class="line">        <span class="attr">_store</span>: &#123;</span><br><span class="line">            <span class="attr">dispatch</span>: <span class="title class_">Function</span>,</span><br><span class="line">            <span class="attr">getState</span>: <span class="title class_">Function</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">Array</span>&lt;T&gt; &#123; <span class="comment">// 使用中发现这个函数会报错？？？</span></span><br><span class="line">    <span class="attr">includes</span>: <span class="function">(<span class="params"><span class="attr">item</span>: T</span>) =&gt;</span> <span class="built_in">boolean</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="编写一个标准的React-Component"><a href="#编写一个标准的React-Component" class="headerlink" title="编写一个标准的React Component"></a>编写一个标准的React Component</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">+ MyComponent</span><br><span class="line">  + __snapshots__ // 测试快照</span><br><span class="line">    - index.react.test.tsx.snap // 快照文件</span><br><span class="line">  - index.tsx</span><br><span class="line">  - index.less // 组件样式，采用的css module</span><br><span class="line">  - index.react.test.tsx // jest test</span><br><span class="line">  - PropsType.ts</span><br></pre></td></tr></table></figure>
+<p>PropsType.ts</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">PropsType</span> &#123;</span><br><span class="line">    <span class="attr">style</span>?: <span class="title class_">React</span>.<span class="property">CSSProperties</span>, <span class="comment">// 父容器style</span></span><br><span class="line">    <span class="attr">headstyle</span>?: <span class="title class_">React</span>.<span class="property">CSSProperties</span>, <span class="comment">// 头部样式</span></span><br><span class="line">    <span class="attr">titleTextstyle</span>?: <span class="title class_">React</span>.<span class="property">CSSProperties</span>, <span class="comment">// 标题文字样式</span></span><br><span class="line">    <span class="attr">iconImg</span>?: <span class="built_in">string</span>, <span class="comment">// 图标图片</span></span><br><span class="line">    <span class="attr">color</span>?: <span class="built_in">string</span>,</span><br><span class="line">    <span class="attr">title</span>?: <span class="built_in">string</span>,</span><br><span class="line">    <span class="attr">children</span>?: <span class="title class_">React</span>.<span class="property">ReactNode</span>,</span><br><span class="line">    <span class="attr">right</span>?: <span class="title class_">React</span>.<span class="property">ReactNode</span>, <span class="comment">// 右侧内容</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title class_">PropsType</span>;</span><br></pre></td></tr></table></figure>
+
+<p>index.tsx</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">React</span> <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> styles <span class="keyword">from</span> <span class="string">&quot;./index.less&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">PropsType</span> <span class="keyword">from</span> <span class="string">&quot;./PropsType&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="title function_">default</span> (&#123; style, headstyle, titleTextstyle, iconImg, color, title, children, right &#125;: <span class="title class_">PropsType</span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&#123;styles.container&#125;</span> <span class="attr">style</span>=<span class="string">&#123;style&#125;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&#123;styles.head&#125;</span> <span class="attr">style</span>=<span class="string">&#123;headstyle&#125;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">                &#123;</span></span><br><span class="line"><span class="language-xml">                    title ?</span></span><br><span class="line"><span class="language-xml">                        <span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&#123;styles.title&#125;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">                            &#123;</span></span><br><span class="line"><span class="language-xml">                                iconImg ?</span></span><br><span class="line"><span class="language-xml">                                    <span class="tag">&lt;<span class="name">img</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">                                        <span class="attr">className</span>=<span class="string">&#123;styles.iconImg&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">                                        <span class="attr">src</span>=<span class="string">&#123;iconImg&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">                                    /&gt;</span></span></span><br><span class="line"><span class="language-xml">                                    :</span></span><br><span class="line"><span class="language-xml">                                    <span class="tag">&lt;<span class="name">span</span> <span class="attr">className</span>=<span class="string">&#123;styles.icon&#125;</span> <span class="attr">style</span>=<span class="string">&#123;&#123;</span> <span class="attr">backgroundColor:</span> <span class="attr">color</span> || &quot;#<span class="attr">2f81f8</span>&quot; &#125;&#125;&gt;</span></span></span><br><span class="line"><span class="language-xml">                                    <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">                            &#125;</span></span><br><span class="line"><span class="language-xml">                            <span class="tag">&lt;<span class="name">span</span> <span class="attr">className</span>=<span class="string">&#123;styles.titleText&#125;</span> <span class="attr">style</span>=<span class="string">&#123;titleTextstyle&#125;</span>&gt;</span>&#123;title&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">                        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">                        :</span></span><br><span class="line"><span class="language-xml">                        <span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">                &#125;</span></span><br><span class="line"><span class="language-xml">                <span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&#123;styles.right&#125;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">                    &#123;right&#125;</span></span><br><span class="line"><span class="language-xml">                <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&#123;styles.content&#125;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">                &#123;children&#125;</span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">    );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>index.react.test.tsx</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">React</span> <span class="keyword">from</span> <span class="string">&quot;react&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="title class_">CustomIconList</span> <span class="keyword">from</span> <span class="string">&quot;./index&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> renderer <span class="keyword">from</span> <span class="string">&quot;react-test-renderer&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="title function_">test</span>(<span class="string">&quot;CustomIconList render&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> component = renderer.<span class="title function_">create</span>(</span><br><span class="line">        <span class="language-xml"><span class="tag">&lt;<span class="name">CustomIconList</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">            <span class="attr">style</span>=<span class="string">&#123;&#123;</span> <span class="attr">height:</span> <span class="attr">200</span> &#125;&#125;</span></span></span><br><span class="line"><span class="tag"><span class="language-xml">            <span class="attr">headstyle</span>=<span class="string">&#123;&#123;</span> <span class="attr">backgroundColor:</span> &quot;#<span class="attr">0f0</span>&quot; &#125;&#125;</span></span></span><br><span class="line"><span class="tag"><span class="language-xml">            <span class="attr">iconImg</span>=<span class="string">&quot;icon-test&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">            <span class="attr">color</span>=<span class="string">&quot;#f00&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">            <span class="attr">title</span>=<span class="string">&quot;test title&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">            <span class="attr">titleTextstyle</span>=<span class="string">&#123;&#123;</span> <span class="attr">fontSize:</span> <span class="attr">12</span> &#125;&#125;</span></span></span><br><span class="line"><span class="tag"><span class="language-xml">            <span class="attr">right</span>=<span class="string">&#123;</span>&lt;<span class="attr">span</span>&gt;</span>test right<span class="tag">&lt;/<span class="name">span</span>&gt;</span>&#125;</span></span><br><span class="line"><span class="language-xml">        &gt;</span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;<span class="name">span</span>&gt;</span>test children<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;/<span class="name">CustomIconList</span>&gt;</span></span></span><br><span class="line">    ).<span class="title function_">toJSON</span>();</span><br><span class="line">    <span class="title function_">expect</span>(component).<span class="title function_">toMatchSnapshot</span>();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h4 id="页面基类的定义"><a href="#页面基类的定义" class="headerlink" title="页面基类的定义"></a>页面基类的定义</h4><figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">React</span>, &#123; <span class="title class_">Component</span> &#125; <span class="keyword">from</span> <span class="string">&quot;react&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> router <span class="keyword">from</span> <span class="string">&#x27;umi/router&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> qs <span class="keyword">from</span> <span class="string">&quot;qs&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> moment <span class="keyword">from</span> <span class="string">&#x27;moment&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">RouteComponentProps</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;react-router&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">FormComponentProps</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;antd/lib/form&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">DispatchProp</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;react-redux&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">PageComponentInterface</span>&lt;P = &#123;&#125;, S = &#123;&#125;, <span class="variable constant_">SS</span> = <span class="built_in">any</span>&gt; <span class="keyword">extends</span> <span class="title class_">Component</span>&lt;P, S, <span class="variable constant_">SS</span>&gt; &#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">PropsType</span> <span class="keyword">extends</span> <span class="title class_">RouteComponentProps</span>&lt;<span class="built_in">any</span>&gt;, <span class="title class_">FormComponentProps</span>, <span class="title class_">DispatchProp</span>&lt;<span class="built_in">any</span>&gt;&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">class</span> <span class="title class_">PageComponent</span>&lt;P <span class="keyword">extends</span> <span class="title class_">PropsType</span>, S&gt; <span class="keyword">extends</span> <span class="title class_">Component</span>&lt;P, S&gt; <span class="keyword">implements</span> <span class="title class_">PageComponentInterface</span>&lt;P, S&gt; &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> searchParams = qs.<span class="title function_">parse</span>(<span class="variable language_">this</span>.<span class="property">props</span>.<span class="property">location</span>.<span class="property">search</span>, &#123; <span class="attr">ignoreQueryPrefix</span>: <span class="literal">true</span> &#125;);</span><br><span class="line"></span><br><span class="line">    goBackHandle = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        router.<span class="title function_">goBack</span>();</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    searchResetHandle = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">		<span class="variable language_">this</span>.<span class="property">props</span>.<span class="property">form</span>.<span class="title function_">resetFields</span>();</span><br><span class="line">		router.<span class="title function_">push</span>(<span class="string">`?`</span>);</span><br><span class="line">    &#125;;</span><br><span class="line">    </span><br><span class="line">	searchBtnHandle = <span class="function">(<span class="params"><span class="attr">e</span>: <span class="title class_">React</span>.<span class="title class_">MouseEvent</span></span>) =&gt;</span> &#123;</span><br><span class="line">        e.<span class="title function_">preventDefault</span>();</span><br><span class="line">		<span class="variable language_">this</span>.<span class="property">props</span>.<span class="property">form</span>.<span class="title function_">validateFields</span>(<span class="function">(<span class="params">error, <span class="attr">values</span>: <span class="title class_">Object</span></span>) =&gt;</span> &#123;</span><br><span class="line">			<span class="keyword">if</span> (!error) &#123;</span><br><span class="line">                <span class="title class_">Object</span>.<span class="title function_">keys</span>(values).<span class="title function_">forEach</span>(<span class="function"><span class="params">key</span> =&gt;</span> &#123;</span><br><span class="line">                    <span class="keyword">if</span> (moment.<span class="title function_">isMoment</span>(values[key])) &#123;</span><br><span class="line">                        values[key] = (values[key] <span class="keyword">as</span> moment.<span class="property">Moment</span>).<span class="title function_">valueOf</span>();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line">				router.<span class="title function_">push</span>(<span class="string">`?<span class="subst">$&#123;qs.stringify(&#123;</span></span></span><br><span class="line"><span class="subst"><span class="string">					...values,</span></span></span><br><span class="line"><span class="subst"><span class="string">                &#125;)&#125;</span>`</span>);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;);</span><br><span class="line">    &#125;;</span><br><span class="line">    </span><br><span class="line">	handlePaginationChange = <span class="function">(<span class="params">page, pageSize</span>) =&gt;</span> &#123;</span><br><span class="line">		<span class="keyword">const</span> oldParams = qs.<span class="title function_">parse</span>(<span class="variable language_">this</span>.<span class="property">props</span>.<span class="property">location</span>.<span class="property">search</span>, &#123; <span class="attr">ignoreQueryPrefix</span>: <span class="literal">true</span> &#125;);</span><br><span class="line">		<span class="keyword">const</span> newParams = &#123; ...oldParams, <span class="attr">pageIndex</span>: page, <span class="attr">pageSize</span>: pageSize &#125;;</span><br><span class="line">		<span class="keyword">if</span> (oldParams.<span class="property">pageSize</span> &amp;&amp; oldParams.<span class="property">pageSize</span> != pageSize) &#123;</span><br><span class="line">			newParams.<span class="property">pageIndex</span> = <span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		router.<span class="title function_">push</span>(<span class="string">`?<span class="subst">$&#123;qs.stringify(newParams)&#125;</span>`</span>);</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用方法：</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;connect&#125; <span class="keyword">from</span> <span class="string">&#x27;dva&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="title class_">React</span> <span class="keyword">from</span> <span class="string">&quot;react&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@connect</span>(<span class="function">(<span class="params">&#123; tradePlan, loading &#125;</span>) =&gt;</span> (&#123;</span><br><span class="line">    <span class="attr">list</span>: tradePlan.<span class="property">list</span>,</span><br><span class="line">    <span class="attr">pagination</span>: tradePlan.<span class="property">pagination</span>,</span><br><span class="line">    <span class="attr">loading</span>: loading.<span class="property">effects</span>[<span class="string">&#x27;tradePlan/queryList&#x27;</span>]</span><br><span class="line">&#125;))</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Index</span> <span class="keyword">extends</span> <span class="title class_ inherited__">PageComponent</span>&lt;<span class="title class_">PropsType</span>, <span class="title class_">StateType</span>&gt; &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>实例上就会挂载基类上的方法</p>
+<h4 id="工具类的应用"><a href="#工具类的应用" class="headerlink" title="工具类的应用"></a>工具类的应用</h4><p>validator.ts</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">NumberRegClass</span> &#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">NumberRegConstructorOptions</span> &#123;</span><br><span class="line">    <span class="attr">positive</span>: <span class="built_in">boolean</span> <span class="comment">//正数</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">NumberReg</span> <span class="keyword">extends</span> <span class="title class_ inherited__">RegExp</span> <span class="keyword">implements</span> <span class="title class_">NumberRegClass</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span>  &#123;<span class="type">number</span>&#125; int 整数位</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span>  &#123;<span class="type">number</span>&#125; decimals 小数位</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span>  &#123;<span class="type">NumberRegConstructorOptions</span>&#125; options? 参数</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params"><span class="attr">int</span>: <span class="built_in">number</span>, <span class="attr">decimals</span>: <span class="built_in">number</span>, <span class="attr">options</span>?: <span class="title class_">NumberRegConstructorOptions</span></span>) &#123;</span><br><span class="line">        <span class="keyword">const</span> &#123; positive = <span class="literal">false</span> &#125; = options || &#123;&#125;;</span><br><span class="line">        <span class="variable language_">super</span>(<span class="string">`^(<span class="subst">$&#123;positive ? <span class="string">&#x27;&#x27;</span> : <span class="string">&#x27;\\-?&#x27;</span>&#125;</span>)([1-9]\\d&#123;0,<span class="subst">$&#123;int - <span class="number">1</span>&#125;</span>&#125;|0)<span class="subst">$&#123;decimals ? <span class="string">`(\\.\\d&#123;0,<span class="subst">$&#123;decimals - <span class="number">1</span>&#125;</span>&#125;[1-9])`</span> : <span class="string">&#x27;&#x27;</span>&#125;</span>?$`</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 验证bit位的整数</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span>  &#123;<span class="type">number</span>&#125; bit 整数位数</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@returns</span> <span class="variable">RegExp</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">static</span> <span class="title function_">int</span>(<span class="attr">bit</span>: <span class="built_in">number</span>): <span class="title class_">RegExp</span> &#123; <span class="comment">//整数</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">RegExp</span>(<span class="string">`^(\\-?[1-9]\\d&#123;0,<span class="subst">$&#123;bit - <span class="number">1</span>&#125;</span>&#125;|0)$`</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>validator.test.ts</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">NumberReg</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./validator&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/// &lt;reference types=&quot;jest&quot; /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="title function_">test</span>(<span class="string">&#x27;NumberReg test&#x27;</span>, <span class="function">() =&gt;</span> &#123; <span class="comment">// 数字正则</span></span><br><span class="line">    <span class="keyword">const</span> number5and4 = <span class="keyword">new</span> <span class="title class_">NumberReg</span>(<span class="number">5</span>, <span class="number">4</span>);</span><br><span class="line">    <span class="title function_">expect</span>(number5and4.<span class="title function_">test</span>(<span class="string">&#x27;12345.1234&#x27;</span>)).<span class="title function_">toBe</span>(<span class="literal">true</span>);</span><br><span class="line">    <span class="title function_">expect</span>(number5and4.<span class="title function_">test</span>(<span class="string">&#x27;-12345.1234&#x27;</span>)).<span class="title function_">toBe</span>(<span class="literal">true</span>);</span><br><span class="line">    <span class="title function_">expect</span>(number5and4.<span class="title function_">test</span>(<span class="string">&#x27;0.1234&#x27;</span>)).<span class="title function_">toBe</span>(<span class="literal">true</span>);</span><br><span class="line">    <span class="title function_">expect</span>(number5and4.<span class="title function_">test</span>(<span class="string">&#x27;-0.1234&#x27;</span>)).<span class="title function_">toBe</span>(<span class="literal">true</span>);</span><br><span class="line">    <span class="title function_">expect</span>(number5and4.<span class="title function_">test</span>(<span class="string">&#x27;12345.12345&#x27;</span>)).<span class="title function_">toBe</span>(<span class="literal">false</span>);</span><br><span class="line">    <span class="title function_">expect</span>(number5and4.<span class="title function_">test</span>(<span class="string">&#x27;12345.120&#x27;</span>)).<span class="title function_">toBe</span>(<span class="literal">false</span>);</span><br><span class="line">    <span class="title function_">expect</span>(number5and4.<span class="title function_">test</span>(<span class="string">&#x27;123456.12&#x27;</span>)).<span class="title function_">toBe</span>(<span class="literal">false</span>);</span><br><span class="line">    <span class="title function_">expect</span>(number5and4.<span class="title function_">test</span>(<span class="string">&#x27;-123456.12&#x27;</span>)).<span class="title function_">toBe</span>(<span class="literal">false</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>以上，是部分运用在TypeScript with React的小结而已，感觉通篇的代码也贴得太多了。（然而还有很多不知道怎么描述。<br>总之，就是让可复用的组件能够独立的进行编写，测试。<br>为所有的工具类函数提供unit test，才能更完善的服务于业务。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/TypeScript/" rel="tag"># TypeScript</a>
+              <a href="/tags/%E5%89%8D%E7%AB%AF/" rel="tag"># 前端</a>
+              <a href="/tags/React/" rel="tag"># React</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2017/09/15/nodejs%20addon%20Hello,World/" rel="prev" title="nodejs addon Hello,World">
+                  <i class="fa fa-angle-left"></i> nodejs addon Hello,World
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2026/09/29/%E4%BB%8E%E6%B2%89%E7%9D%A1%E5%88%B0%E5%8F%8C%E7%AB%AF%E5%8F%91%E5%B8%83%EF%BC%9A%E5%8D%9A%E5%AE%A2%E5%8D%87%E7%BA%A7%E4%B8%8E%20GitHub%20Actions%20%E8%AE%B0%E5%BD%95/" rel="next" title="从沉睡到双端发布">
+                  从沉睡到双端发布 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2017 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">vldh</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"alwaysloseall","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/js/third-party/comments/disqus.js" defer></script>
+
+</body>
+</html>

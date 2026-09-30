@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"alwaysloseall.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null,"activeClass":"disqus"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="这个博客从 2018 年 11 月左右就停更了。主题还是当年的 NexT 5，文章倒没丢，停的时候大概十三篇，源码和线上也能对上。只是构建环境停在那年，我自己再打开都有点发怵。 今年想给它一个自己的域名：blog.nekodayo.com。alwaysloseall.github.io 用了很多年，以前的链接还指着那儿，所以 GitHub Pages 留着。两个地址看的是同一份站点。 仓库里，文章">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从沉睡到双端发布">
+<meta property="og:url" content="https://alwaysloseall.github.io/2026/09/29/%E4%BB%8E%E6%B2%89%E7%9D%A1%E5%88%B0%E5%8F%8C%E7%AB%AF%E5%8F%91%E5%B8%83%EF%BC%9A%E5%8D%9A%E5%AE%A2%E5%8D%87%E7%BA%A7%E4%B8%8E%20GitHub%20Actions%20%E8%AE%B0%E5%BD%95/index.html">
+<meta property="og:site_name" content="amazing!!!">
+<meta property="og:description" content="这个博客从 2018 年 11 月左右就停更了。主题还是当年的 NexT 5，文章倒没丢，停的时候大概十三篇，源码和线上也能对上。只是构建环境停在那年，我自己再打开都有点发怵。 今年想给它一个自己的域名：blog.nekodayo.com。alwaysloseall.github.io 用了很多年，以前的链接还指着那儿，所以 GitHub Pages 留着。两个地址看的是同一份站点。 仓库里，文章">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-09-29T08:00:00.000Z">
+<meta property="article:author" content="vldh">
+<meta property="article:tag" content="GitHub Actions">
+<meta property="article:tag" content="Hexo">
+<meta property="article:tag" content="NexT">
+<meta property="article:tag" content="博客">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://alwaysloseall.github.io/2026/09/29/%E4%BB%8E%E6%B2%89%E7%9D%A1%E5%88%B0%E5%8F%8C%E7%AB%AF%E5%8F%91%E5%B8%83%EF%BC%9A%E5%8D%9A%E5%AE%A2%E5%8D%87%E7%BA%A7%E4%B8%8E%20GitHub%20Actions%20%E8%AE%B0%E5%BD%95/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://alwaysloseall.github.io/2026/09/29/%E4%BB%8E%E6%B2%89%E7%9D%A1%E5%88%B0%E5%8F%8C%E7%AB%AF%E5%8F%91%E5%B8%83%EF%BC%9A%E5%8D%9A%E5%AE%A2%E5%8D%87%E7%BA%A7%E4%B8%8E%20GitHub%20Actions%20%E8%AE%B0%E5%BD%95/","path":"2026/09/29/从沉睡到双端发布：博客升级与 GitHub Actions 记录/","title":"从沉睡到双端发布"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>从沉睡到双端发布 | amazing!!!</title>
+  
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+<meta name="keywords" content="vldh, alwaysloseall, blog, 失败者, 勃学">
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">amazing!!!</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">哀吾生之须臾，羡长江之无穷</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="vldh"
+      src="https://avatars2.githubusercontent.com/u/20535775?v=3&s=460">
+  <p class="site-author-name" itemprop="name">vldh</p>
+  <div class="site-description" itemprop="description">一个在浅色床单上哭泣的失败者的博客</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/alwaysloseall" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;alwaysloseall" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="http://weibo.com/alwaysloseall" title="weibo → http:&#x2F;&#x2F;weibo.com&#x2F;alwaysloseall" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>weibo</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://alwaysloseall.github.io/2026/09/29/%E4%BB%8E%E6%B2%89%E7%9D%A1%E5%88%B0%E5%8F%8C%E7%AB%AF%E5%8F%91%E5%B8%83%EF%BC%9A%E5%8D%9A%E5%AE%A2%E5%8D%87%E7%BA%A7%E4%B8%8E%20GitHub%20Actions%20%E8%AE%B0%E5%BD%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars2.githubusercontent.com/u/20535775?v=3&s=460">
+      <meta itemprop="name" content="vldh">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="amazing!!!">
+      <meta itemprop="description" content="一个在浅色床单上哭泣的失败者的博客">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="从沉睡到双端发布 | amazing!!!">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          从沉睡到双端发布
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-09-29 16:00:00" itemprop="dateCreated datePublished" datetime="2026-09-29T16:00:00+08:00">2026-09-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-09-30 10:11:41" itemprop="dateModified" datetime="2026-09-30T02:11:41+00:00">2026-09-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%8D%9A%E5%AE%A2%E8%BF%90%E7%BB%B4/" itemprop="url" rel="index"><span itemprop="name">博客运维</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2026/09/29/%E4%BB%8E%E6%B2%89%E7%9D%A1%E5%88%B0%E5%8F%8C%E7%AB%AF%E5%8F%91%E5%B8%83%EF%BC%9A%E5%8D%9A%E5%AE%A2%E5%8D%87%E7%BA%A7%E4%B8%8E%20GitHub%20Actions%20%E8%AE%B0%E5%BD%95/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2026/09/29/从沉睡到双端发布：博客升级与 GitHub Actions 记录/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>这个博客从 2018 年 11 月左右就停更了。主题还是当年的 NexT 5，文章倒没丢，停的时候大概十三篇，源码和线上也能对上。只是构建环境停在那年，我自己再打开都有点发怵。</p>
+<p>今年想给它一个自己的域名：<a target="_blank" rel="noopener" href="https://blog.nekodayo.com/">blog.nekodayo.com</a>。<a href="https://alwaysloseall.github.io/">alwaysloseall.github.io</a> 用了很多年，以前的链接还指着那儿，所以 GitHub Pages 留着。两个地址看的是同一份站点。</p>
+<p>仓库里，文章和配置写在源码那条分支上；GitHub Pages 用的是生成出来的静态页面。自己的域名也只放静态文件，服务器上并不跑 Hexo。</p>
+<p>架子换了一代：Hexo 到 8，主题到 NexT 8，Node 换成现在还能用来构建的版本。外观还是原来那套浅色版式。旧文章的地址没改，以前的链接应该还能打开。</p>
+<p>发布是一次构建、两个出口。源码推上去之后，GitHub Actions 会生成一次站点，同时更新 GitHub Pages 和 blog.nekodayo.com。之后写新文章也一样：改源码，推上去，两个站一起变。</p>
+<p>现在两边都能打开：</p>
+<ul>
+<li><a href="https://alwaysloseall.github.io/">https://alwaysloseall.github.io/</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.nekodayo.com/">https://blog.nekodayo.com/</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Hexo/" rel="tag"># Hexo</a>
+              <a href="/tags/GitHub-Actions/" rel="tag"># GitHub Actions</a>
+              <a href="/tags/NexT/" rel="tag"># NexT</a>
+              <a href="/tags/%E5%8D%9A%E5%AE%A2/" rel="tag"># 博客</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/11/20/TypeScript%20with%20React%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%BB%E7%BB%93/" rel="prev" title="TypeScript with React的一些总结">
+                  <i class="fa fa-angle-left"></i> TypeScript with React的一些总结
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2026/09/29/Hexo%20%E5%8D%9A%E5%AE%A2%E5%8D%87%E7%BA%A7%E4%B8%8E%20GitHub%20Actions%20%E5%8F%8C%E7%AB%AF%E5%8F%91%E5%B8%83%E6%95%99%E7%A8%8B/" rel="next" title="Hexo 博客升级与 GitHub Actions 双端发布教程">
+                  Hexo 博客升级与 GitHub Actions 双端发布教程 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2017 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">vldh</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"alwaysloseall","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/js/third-party/comments/disqus.js" defer></script>
+
+</body>
+</html>

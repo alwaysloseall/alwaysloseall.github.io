@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"alwaysloseall.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null,"activeClass":"disqus"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="这篇按本仓库的做法，说明怎样把一个停在旧 Hexo 上的 GitHub Pages 博客升到当前能构建的版本，并用一次 GitHub Actions 构建同时发布到 GitHub Pages 和一台 VPS 的静态目录。 想先看这件事的经过，可以读 从沉睡到双端发布。做完之后，同一份站点在这两个地址上：  https:&#x2F;&#x2F;alwaysloseall.github.io&#x2F; https:&#x2F;&#x2F;blog.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo 博客升级与 GitHub Actions 双端发布教程">
+<meta property="og:url" content="https://alwaysloseall.github.io/2026/09/29/Hexo%20%E5%8D%9A%E5%AE%A2%E5%8D%87%E7%BA%A7%E4%B8%8E%20GitHub%20Actions%20%E5%8F%8C%E7%AB%AF%E5%8F%91%E5%B8%83%E6%95%99%E7%A8%8B/index.html">
+<meta property="og:site_name" content="amazing!!!">
+<meta property="og:description" content="这篇按本仓库的做法，说明怎样把一个停在旧 Hexo 上的 GitHub Pages 博客升到当前能构建的版本，并用一次 GitHub Actions 构建同时发布到 GitHub Pages 和一台 VPS 的静态目录。 想先看这件事的经过，可以读 从沉睡到双端发布。做完之后，同一份站点在这两个地址上：  https:&#x2F;&#x2F;alwaysloseall.github.io&#x2F; https:&#x2F;&#x2F;blog.">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-09-29T09:00:00.000Z">
+<meta property="article:author" content="vldh">
+<meta property="article:tag" content="GitHub Actions">
+<meta property="article:tag" content="Hexo">
+<meta property="article:tag" content="NexT">
+<meta property="article:tag" content="教程">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://alwaysloseall.github.io/2026/09/29/Hexo%20%E5%8D%9A%E5%AE%A2%E5%8D%87%E7%BA%A7%E4%B8%8E%20GitHub%20Actions%20%E5%8F%8C%E7%AB%AF%E5%8F%91%E5%B8%83%E6%95%99%E7%A8%8B/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://alwaysloseall.github.io/2026/09/29/Hexo%20%E5%8D%9A%E5%AE%A2%E5%8D%87%E7%BA%A7%E4%B8%8E%20GitHub%20Actions%20%E5%8F%8C%E7%AB%AF%E5%8F%91%E5%B8%83%E6%95%99%E7%A8%8B/","path":"2026/09/29/Hexo 博客升级与 GitHub Actions 双端发布教程/","title":"Hexo 博客升级与 GitHub Actions 双端发布教程"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Hexo 博客升级与 GitHub Actions 双端发布教程 | amazing!!!</title>
+  
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+<meta name="keywords" content="vldh, alwaysloseall, blog, 失败者, 勃学">
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">amazing!!!</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">哀吾生之须臾，羡长江之无穷</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E5%A7%8B%E4%B9%8B%E5%89%8D"><span class="nav-number">1.</span> <span class="nav-text">开始之前</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%87%E7%BA%A7%E6%9E%84%E5%BB%BA%E9%93%BE"><span class="nav-number">2.</span> <span class="nav-text">升级构建链</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8A%8A-Node-%E5%86%99%E8%BF%9B-nvmrc"><span class="nav-number">2.1.</span> <span class="nav-text">把 Node 写进 .nvmrc</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hexo-8%EF%BC%8C%E4%B8%BB%E9%A2%98%E6%94%B9%E8%B5%B0-npm"><span class="nav-number">2.2.</span> <span class="nav-text">Hexo 8，主题改走 npm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%B0%E5%9D%80%E3%80%81%E8%AF%AD%E8%A8%80%E3%80%81%E5%9B%BA%E5%AE%9A%E9%93%BE%E6%8E%A5%E3%80%81%E5%8F%91%E5%B8%83%E5%88%86%E6%94%AF"><span class="nav-number">2.3.</span> <span class="nav-text">地址、语言、固定链接、发布分支</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%AC%E5%9C%B0%E7%94%9F%E6%88%90%E4%B8%80%E6%AC%A1"><span class="nav-number">2.4.</span> <span class="nav-text">本地生成一次</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E6%AC%A1%E6%9E%84%E5%BB%BA%EF%BC%8C%E4%B8%A4%E4%B8%AA%E5%87%BA%E5%8F%A3"><span class="nav-number">3.</span> <span class="nav-text">一次构建，两个出口</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#GitHub-Pages"><span class="nav-number">3.1.</span> <span class="nav-text">GitHub Pages</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#VPS"><span class="nav-number">3.2.</span> <span class="nav-text">VPS</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D-Actions-secrets"><span class="nav-number">4.</span> <span class="nav-text">配 Actions secrets</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E7%BB%93%E6%9E%9C%E4%B8%8D%E5%83%8F%E7%AB%99%E7%82%B9%E6%97%B6%EF%BC%8C%E4%B8%8D%E8%A6%81%E5%8F%91%E5%B8%83"><span class="nav-number">5.</span> <span class="nav-text">生成结果不像站点时，不要发布</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%A4%B1%E8%B4%A5%E6%97%B6%EF%BC%8CPages-%E4%BB%8D%E7%84%B6%E5%8F%AF%E4%BB%A5%E6%88%90%E5%8A%9F"><span class="nav-number">6.</span> <span class="nav-text">服务器失败时，Pages 仍然可以成功</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B9%B3%E6%97%B6%E6%80%8E%E4%B9%88%E5%8F%91%E4%B8%80%E7%AF%87"><span class="nav-number">7.</span> <span class="nav-text">平时怎么发一篇</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="vldh"
+      src="https://avatars2.githubusercontent.com/u/20535775?v=3&s=460">
+  <p class="site-author-name" itemprop="name">vldh</p>
+  <div class="site-description" itemprop="description">一个在浅色床单上哭泣的失败者的博客</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/alwaysloseall" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;alwaysloseall" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="http://weibo.com/alwaysloseall" title="weibo → http:&#x2F;&#x2F;weibo.com&#x2F;alwaysloseall" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>weibo</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://alwaysloseall.github.io/2026/09/29/Hexo%20%E5%8D%9A%E5%AE%A2%E5%8D%87%E7%BA%A7%E4%B8%8E%20GitHub%20Actions%20%E5%8F%8C%E7%AB%AF%E5%8F%91%E5%B8%83%E6%95%99%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars2.githubusercontent.com/u/20535775?v=3&s=460">
+      <meta itemprop="name" content="vldh">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="amazing!!!">
+      <meta itemprop="description" content="一个在浅色床单上哭泣的失败者的博客">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Hexo 博客升级与 GitHub Actions 双端发布教程 | amazing!!!">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Hexo 博客升级与 GitHub Actions 双端发布教程
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-09-29 17:00:00" itemprop="dateCreated datePublished" datetime="2026-09-29T17:00:00+08:00">2026-09-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-09-30 10:11:41" itemprop="dateModified" datetime="2026-09-30T02:11:41+00:00">2026-09-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%8D%9A%E5%AE%A2%E8%BF%90%E7%BB%B4/" itemprop="url" rel="index"><span itemprop="name">博客运维</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2026/09/29/Hexo%20%E5%8D%9A%E5%AE%A2%E5%8D%87%E7%BA%A7%E4%B8%8E%20GitHub%20Actions%20%E5%8F%8C%E7%AB%AF%E5%8F%91%E5%B8%83%E6%95%99%E7%A8%8B/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2026/09/29/Hexo 博客升级与 GitHub Actions 双端发布教程/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>这篇按本仓库的做法，说明怎样把一个停在旧 Hexo 上的 GitHub Pages 博客升到当前能构建的版本，并用一次 GitHub Actions 构建同时发布到 GitHub Pages 和一台 VPS 的静态目录。</p>
+<p>想先看这件事的经过，可以读 <a href="/2026/09/29/%E4%BB%8E%E6%B2%89%E7%9D%A1%E5%88%B0%E5%8F%8C%E7%AB%AF%E5%8F%91%E5%B8%83%EF%BC%9A%E5%8D%9A%E5%AE%A2%E5%8D%87%E7%BA%A7%E4%B8%8E%20GitHub%20Actions%20%E8%AE%B0%E5%BD%95/">从沉睡到双端发布</a>。做完之后，同一份站点在这两个地址上：</p>
+<ul>
+<li><a href="https://alwaysloseall.github.io/">https://alwaysloseall.github.io/</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.nekodayo.com/">https://blog.nekodayo.com/</a></li>
+</ul>
+<p>下面的分支名、目录和 secret 名都是本仓库的。你的 Pages 分支如果叫 <code>gh-pages</code>，把文中的 <code>master</code> 换成你的发布分支，两处保持一致即可。</p>
+<h2 id="开始之前"><a href="#开始之前" class="headerlink" title="开始之前"></a>开始之前</h2><p>先确认这几样东西已经在：</p>
+<ol>
+<li><strong>源码分支和发布分支是分开的。</strong> 文章、<code>_config.yml</code>、主题配置写在源码分支。本仓库源码分支叫 <code>hexo</code>。GitHub Pages 读的是另一条只放静态文件的分支，本仓库是 <code>master</code>（有的仓库用 <code>gh-pages</code>）。不要把 <code>hexo</code> 设成 Pages 的发布分支，否则 Pages 会去渲染 Markdown 源码。</li>
+<li><strong>本机能装上当前的 Node。</strong> Hexo 8 要求 Node <code>&gt;= 20.19.0</code>。本仓库把版本写在 <code>.nvmrc</code>，目前是 <code>26.10.0</code>。</li>
+<li><strong>有一台 Linux VPS，并且能 SSH 上去。</strong> 上面跑 Caddy 或 nginx，把某个目录当成网站根。本仓库这个目录是 <code>/var/www/blog</code>。服务器上要有 OpenSSH 和 <code>rsync</code>，不需要安装 Hexo 或 Node。</li>
+<li><strong>网站根目录只放这次要发布的静态文件。</strong> 后面的同步带 <code>--delete</code>，目录里多出来的文件会被删掉。</li>
+</ol>
+<h2 id="升级构建链"><a href="#升级构建链" class="headerlink" title="升级构建链"></a>升级构建链</h2><p>旧环境常见的组合是 Node 12、Hexo 3、NexT 5。这套在现在的系统上往往装不上，也和当前的 GitHub Actions 镜像对不齐。升级时让本机和 CI 读同一份版本说明。</p>
+<h3 id="把-Node-写进-nvmrc"><a href="#把-Node-写进-nvmrc" class="headerlink" title="把 Node 写进 .nvmrc"></a>把 Node 写进 <code>.nvmrc</code></h3><p><code>.nvmrc</code> 里只放一行版本号，例如 <code>26.10.0</code>。本机：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">nvm install</span><br><span class="line">nvm use</span><br><span class="line">node -v</span><br></pre></td></tr></table></figure>
+
+<p><code>package.json</code> 的 <code>engines.node</code> 写成 <code>&gt;=20.19.0</code>，避免有人用过旧的 Node 跑 <code>npm ci</code>。Actions 里用 <code>actions/setup-node</code>，并设置 <code>node-version-file: .nvmrc</code>，这样 CI 和本机读的是同一个文件。</p>
+<h3 id="Hexo-8，主题改走-npm"><a href="#Hexo-8，主题改走-npm" class="headerlink" title="Hexo 8，主题改走 npm"></a>Hexo 8，主题改走 npm</h3><p>依赖按本仓库锁定的版本安装：</p>
+<table>
+<thead>
+<tr>
+<th>包</th>
+<th>版本</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>hexo</td>
+<td>8.1.2</td>
+</tr>
+<tr>
+<td>hexo-theme-next</td>
+<td>8.29.0</td>
+</tr>
+<tr>
+<td>hexo-deployer-git</td>
+<td>4.0.0</td>
+</tr>
+</tbody></table>
+<p>主题用 npm 包，不再用 <code>themes/next</code> 这种 git 子模块。旧子模块指着 2017 年的 NexT 5.1.0，这个仓库里还曾经没有 <code>.gitmodules</code>，克隆之后主题目录并不可靠。</p>
+<p><code>hexo-theme-next</code> 注册出来的主题名仍是 <code>next</code>，所以 <code>_config.yml</code> 里继续写：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">theme:</span> <span class="string">next</span></span><br></pre></td></tr></table></figure>
+
+<p>站点自己的外观放在仓库根目录的 <code>_config.next.yml</code>。Hexo 会用它覆盖 <code>node_modules/hexo-theme-next</code> 里的默认值。要改配色、菜单、页脚，改这份文件。不要改 <code>node_modules</code> 里的主题源码，下次 <code>npm ci</code> 会盖掉。</p>
+<p>本仓库在 <code>_config.next.yml</code> 里保留了原来的 Pisces 方案，并关掉了 NexT 8 默认打开的暗色模式。你的站点按自己的外观写，和发布流程无关。</p>
+<h3 id="地址、语言、固定链接、发布分支"><a href="#地址、语言、固定链接、发布分支" class="headerlink" title="地址、语言、固定链接、发布分支"></a>地址、语言、固定链接、发布分支</h3><p>这几项写在 <code>_config.yml</code>，升级时逐项核对，不要顺手“整理”旧路径。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">url:</span> <span class="string">https://alwaysloseall.github.io</span></span><br><span class="line"><span class="attr">root:</span> <span class="string">/</span></span><br><span class="line"><span class="attr">permalink:</span> <span class="string">:year/:month/:day/:title/</span></span><br><span class="line"><span class="attr">language:</span> <span class="string">zh-CN</span></span><br><span class="line"></span><br><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">https://github.com/alwaysloseall/alwaysloseall.github.io.git</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">master</span></span><br></pre></td></tr></table></figure>
+
+<p>为什么要改 <code>language</code>：NexT 8 的简体语言文件是 <code>zh-CN.yml</code>。旧配置里常见的 <code>zh-Hans</code> 对不上这份文件，菜单会落到主题的默认语言。</p>
+<p>为什么固定链接不动：<code>:title</code> 取的是文章文件名。旧文章路径里有中文和空格，和 2018 年线上一致。改成英文 slug、<code>:name</code> 或 <code>:id</code>，原来的外链会 404。升级后先对比 <code>public/</code> 里的文章路径，再允许发布。</p>
+<p><code>deploy.branch</code> 必须和后面 Actions 的 <code>publish_branch</code> 相同。本机的 <code>npx hexo deploy</code> 只按这一段把 <code>public/</code> force push 到该分支，不会同步 VPS。双端发布以 Actions 为准。</p>
+<h3 id="本地生成一次"><a href="#本地生成一次" class="headerlink" title="本地生成一次"></a>本地生成一次</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm ci</span><br><span class="line">npx hexo clean</span><br><span class="line">npx hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>看两样东西：</p>
+<ul>
+<li><code>public/index.html</code> 存在且不是空文件</li>
+<li>每篇文章仍在 <code>public/年/月/日/标题/index.html</code></li>
+</ul>
+<p><code>npx hexo server</code> 可以在 <a target="_blank" rel="noopener" href="http://localhost:4000/">http://localhost:4000</a> 看页面。<code>public/</code> 已在 <code>.gitignore</code> 里，不要提交。</p>
+<p>有的旧文章在 front matter 里把 <code>layout</code> 写成了主题不存在的名字。NexT 8 没有对应模板时，那一篇生成会出问题。本仓库有两篇写成了 <code>nodejs</code> 和 <code>typescript</code>，<code>scripts/fix-legacy-layouts.js</code> 在生成前把它们按 <code>post</code> 渲染，不改原文。你的站点如果没有这种历史字段，不必加这个脚本。</p>
+<h2 id="一次构建，两个出口"><a href="#一次构建，两个出口" class="headerlink" title="一次构建，两个出口"></a>一次构建，两个出口</h2><p>工作流文件是 <code>.github/workflows/deploy.yml</code>，名称 <code>Deploy</code>。两种情况会启动它：向 <code>hexo</code> push，或在 Actions 页面手动 Run workflow（<code>workflow_dispatch</code>）。</p>
+<p>真正往 <code>master</code> 和服务器写文件，还要求 <code>github.ref == &#39;refs/heads/hexo&#39;</code>。因此只有对源码分支的 push，以及在 <code>hexo</code> 上手动 Run workflow，会发布。从别的分支手动运行时，<code>build</code> 仍会生成，两个发布 job 会被跳过。尚未合并的 Pull Request 不会触发这条工作流；合并进 <code>hexo</code> 时的那次 push 才会。</p>
+<p>三个 job 的关系如下。名字和仓库里的一致：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">Deploy</span></span><br><span class="line"></span><br><span class="line"><span class="attr">on:</span></span><br><span class="line">  <span class="attr">push:</span></span><br><span class="line">    <span class="attr">branches:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">hexo</span></span><br><span class="line">  <span class="attr">workflow_dispatch:</span></span><br><span class="line"></span><br><span class="line"><span class="attr">concurrency:</span></span><br><span class="line">  <span class="attr">group:</span> <span class="string">dual-deploy</span></span><br><span class="line">  <span class="attr">cancel-in-progress:</span> <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="attr">jobs:</span></span><br><span class="line">  <span class="attr">build:</span></span><br><span class="line">    <span class="comment"># setup-node 读取 .nvmrc，cache: npm</span></span><br><span class="line">    <span class="comment"># npm ci</span></span><br><span class="line">    <span class="comment"># npx hexo clean &amp;&amp; npx hexo generate</span></span><br><span class="line">    <span class="comment"># 检查 public/index.html 和按年月日分目录的文章页</span></span><br><span class="line">    <span class="comment"># actions/upload-artifact，名称 site，保留 14 天</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">deploy-pages:</span></span><br><span class="line">    <span class="attr">needs:</span> <span class="string">build</span></span><br><span class="line">    <span class="attr">if:</span> <span class="string">github.ref</span> <span class="string">==</span> <span class="string">&#x27;refs/heads/hexo&#x27;</span></span><br><span class="line">    <span class="comment"># 下载 site 到 public/</span></span><br><span class="line">    <span class="comment"># peaceiris/actions-gh-pages@v4</span></span><br><span class="line">    <span class="comment">#   github_token: $&#123;&#123; secrets.GITHUB_TOKEN &#125;&#125;</span></span><br><span class="line">    <span class="comment">#   publish_dir: ./public</span></span><br><span class="line">    <span class="comment">#   publish_branch: master</span></span><br><span class="line">    <span class="comment">#   force_orphan: true</span></span><br><span class="line">    <span class="comment">#   enable_jekyll: false</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">deploy-nekodayo:</span></span><br><span class="line">    <span class="attr">needs:</span> <span class="string">build</span></span><br><span class="line">    <span class="attr">if:</span> <span class="string">github.ref</span> <span class="string">==</span> <span class="string">&#x27;refs/heads/hexo&#x27;</span></span><br><span class="line">    <span class="comment"># 下载同一份 site 到 public/</span></span><br><span class="line">    <span class="comment"># bash .github/scripts/deploy-nekodayo.sh</span></span><br><span class="line">    <span class="comment"># rsync -az --delete 到用户@主机:/var/www/blog</span></span><br></pre></td></tr></table></figure>
+
+<p><code>deploy-pages</code> 和 <code>deploy-nekodayo</code> 都只 <code>needs: build</code>，彼此不依赖。一次构建上传一份名为 <code>site</code> 的 artifact，两个发布 job 各下载这一份，避免各生成一次后内容对不上。</p>
+<p><code>cancel-in-progress: false</code> 是故意的：新的 push 不会取消已经在跑的发布，免得 rsync 或推分支停在半截。</p>
+<h3 id="GitHub-Pages"><a href="#GitHub-Pages" class="headerlink" title="GitHub Pages"></a>GitHub Pages</h3><p><code>deploy-pages</code> 使用 <a target="_blank" rel="noopener" href="https://github.com/peaceiris/actions-gh-pages">peaceiris&#x2F;actions-gh-pages</a>。<code>github_token</code> 用 Actions 自带的 <code>secrets.GITHUB_TOKEN</code>，不用再为 Pages 建一个 secret。</p>
+<p><code>force_orphan: true</code> 让 <code>master</code> 每次只剩「最新站点」这一个提交，历史留在 <code>hexo</code>。<code>enable_jekyll: false</code> 会在站点根放 <code>.nojekyll</code>，GitHub Pages 不会再用 Jekyll 处理这个目录。</p>
+<p>这个 job 声明了 <code>contents: write</code>。若推送报没有写权限，到 <strong>Settings → Actions → General → Workflow permissions</strong>，选择 <strong>Read and write permissions</strong>。<code>master</code> 如果禁止 force push，orphan 推送也会失败，需要允许 GitHub Actions 向这条分支 force push。</p>
+<p><code>master</code> 上如果曾经手工放过 <code>CNAME</code>，下次 orphan 发布会盖掉。自定义域名文件要放进会进入 <code>public/</code> 的源码里，而不是只放在发布分支上。</p>
+<h3 id="VPS"><a href="#VPS" class="headerlink" title="VPS"></a>VPS</h3><p><code>deploy-nekodayo</code> 不在服务器上跑 Hexo。它下载 <code>public/</code>，用仓库里的 <code>.github/scripts/deploy-nekodayo.sh</code> 经 SSH 执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rsync -az --delete public/ 用户@主机:/var/www/blog/</span><br></pre></td></tr></table></figure>
+
+<p>脚本里的目标路径写死为 <code>/var/www/blog</code>。主机和用户有默认值，也可以用 secret 覆盖（见下一节）。同步结束后会在服务器上检查 <code>/var/www/blog/index.html</code> 非空。</p>
+<p><code>--delete</code> 的范围只是这个网站根目录：本次 <code>public/</code> 里没有的文件，会从 <code>/var/www/blog</code> 删掉。<code>hexo</code> 分支上的 Markdown 不在这台机器上，不会被 rsync 碰到。</p>
+<p>Caddy 或 nginx 只要把站点根指到这个目录。Web 服务器配置不在这条工作流里，升级 Hexo 时不用改它，除非你同时换了目录。</p>
+<h2 id="配-Actions-secrets"><a href="#配-Actions-secrets" class="headerlink" title="配 Actions secrets"></a>配 Actions secrets</h2><p>路径：<strong>Settings → Secrets and variables → Actions → New repository secret</strong>。Secret 属于仓库，不随分支变化。希望第一次推到 <code>hexo</code> 时服务器也成功，就先把密钥加好，再合并工作流。</p>
+<p>用一把只给这个博客部署的密钥，不要复用你平时登录服务器或 GitHub 的私钥。不要设口令，Actions 不能在中途输入 passphrase。私钥不要提交进仓库。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t ed25519 -C <span class="string">&quot;github-actions-blog-deploy&quot;</span> -f nekodayo_deploy -N <span class="string">&quot;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>把 <code>nekodayo_deploy.pub</code> 追加到服务器上对应用户的 <code>authorized_keys</code>。本仓库默认用户是 <code>root</code>，文件是 <code>/root/.ssh/authorized_keys</code>。若你把 <code>NEKODAYO_USER</code> 改成别的用户，公钥就要进那个用户的 <code>authorized_keys</code>，并且该用户对 <code>/var/www/blog</code> 有写权限。</p>
+<table>
+<thead>
+<tr>
+<th>Secret</th>
+<th>放什么</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>NEKODAYO_SSH_KEY</code></td>
+<td>必填。<code>nekodayo_deploy</code> 私钥全文（OpenSSH 格式，保留换行）</td>
+</tr>
+<tr>
+<td><code>NEKODAYO_KNOWN_HOSTS</code></td>
+<td>建议。<code>ssh-keyscan</code> 的输出，用来固定主机密钥</td>
+</tr>
+<tr>
+<td><code>NEKODAYO_HOST</code></td>
+<td>可选。默认 <code>nekodayo.com</code></td>
+</tr>
+<tr>
+<td><code>NEKODAYO_USER</code></td>
+<td>可选。默认 <code>root</code></td>
+</tr>
+</tbody></table>
+<p>在仓库目录里写入（私钥路径按你上一步的文件名）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gh secret <span class="built_in">set</span> NEKODAYO_SSH_KEY &lt; nekodayo_deploy</span><br><span class="line">gh secret <span class="built_in">set</span> NEKODAYO_KNOWN_HOSTS &lt; &lt;(ssh-keyscan -t ed25519,ecdsa,rsa nekodayo.com)</span><br></pre></td></tr></table></figure>
+
+<p><code>gh secret set</code> 会保留换行。写完后私钥文件留在本机或删掉。</p>
+<p><code>NEKODAYO_KNOWN_HOSTS</code> 保存之前，先对主机指纹。本机：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keyscan -t ed25519 nekodayo.com | ssh-keygen -lf -</span><br></pre></td></tr></table></figure>
+
+<p>在服务器上：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -lf /etc/ssh/ssh_host_ed25519_key.pub</span><br></pre></td></tr></table></figure>
+
+<p>两边一致再写入 secret。这个 secret 空着时，脚本会当场 <code>ssh-keyscan</code> 并信任当次返回的密钥。那是首次信任：当次连接若被劫持，记下来的会是别人的主机密钥。配好 <code>NEKODAYO_KNOWN_HOSTS</code> 之后，脚本使用 <code>StrictHostKeyChecking=yes</code>，不再扫描。</p>
+<p>服务器上还没有 <code>rsync</code> 时，<code>deploy-nekodayo</code> 会失败并提示安装。装好后重跑该 job 即可。</p>
+<h2 id="生成结果不像站点时，不要发布"><a href="#生成结果不像站点时，不要发布" class="headerlink" title="生成结果不像站点时，不要发布"></a>生成结果不像站点时，不要发布</h2><p><code>build</code> 在上传 artifact 之前做检查，核心是：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">test</span> -s public/index.html</span><br><span class="line">find public -mindepth 3 -path <span class="string">&#x27;public/20*/*/*/index.html&#x27;</span> -<span class="built_in">print</span> -quit</span><br></pre></td></tr></table></figure>
+
+<p><code>index.html</code> 缺失或为空，或者找不到 <code>public/20xx/月/日/.../index.html</code> 这种文章页，这一步会失败退出。<code>deploy-pages</code> 和 <code>deploy-nekodayo</code> 都依赖 <code>build</code>，所以两处都不会被覆盖。</p>
+<p>这个查找方式和本仓库的固定链接绑在一起：<code>:year/:month/:day/:title/</code>。如果你改了 permalink，要同时改工作流里的 <code>find</code>，否则正常站点也会被当成空站拦下。</p>
+<h2 id="服务器失败时，Pages-仍然可以成功"><a href="#服务器失败时，Pages-仍然可以成功" class="headerlink" title="服务器失败时，Pages 仍然可以成功"></a>服务器失败时，Pages 仍然可以成功</h2><p>两个发布 job 互不等待。<code>NEKODAYO_SSH_KEY</code> 没配、SSH 登录失败、主机密钥对不上、服务器没有 <code>rsync</code>，都只会让 <code>deploy-nekodayo</code> 失败。<code>deploy-pages</code> 仍会把同一份 artifact 推到 <code>master</code>。</p>
+<p>整次 workflow 会显示失败，因为服务器没有同步上。打开该次运行，看 <code>deploy-pages</code> 自己的结论。<code>site</code> 这个 artifact 保留 14 天，密钥或服务器补好之后可以只重跑 <code>deploy-nekodayo</code>，也可以再推一次 <code>hexo</code>，或手动 Run workflow。</p>
+<h2 id="平时怎么发一篇"><a href="#平时怎么发一篇" class="headerlink" title="平时怎么发一篇"></a>平时怎么发一篇</h2><p>改动都发生在源码分支：新文章放 <code>source/_posts/</code>，日期写在 front matter 里。然后任选一种方式触发 <code>Deploy</code>：</p>
+<ol>
+<li>直接 push 到 <code>hexo</code></li>
+<li>开 Pull Request，合并进 <code>hexo</code>（合并会产生一次指向 <code>hexo</code> 的 push）</li>
+<li>在 Actions 里对工作流 <code>Deploy</code> 选 <strong>Run workflow</strong>，分支选 <code>hexo</code></li>
+</ol>
+<p>发之前在本机跑一次 <code>npx hexo generate</code>，确认新文章出现在 <code>public/年/月/日/标题/</code>，旧文章的路径没有变。本机的 <code>npx hexo deploy</code> 只会更新 <code>master</code>，要让 VPS 一起更新，用上面三种里的一种。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Hexo/" rel="tag"># Hexo</a>
+              <a href="/tags/GitHub-Actions/" rel="tag"># GitHub Actions</a>
+              <a href="/tags/NexT/" rel="tag"># NexT</a>
+              <a href="/tags/%E6%95%99%E7%A8%8B/" rel="tag"># 教程</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/09/29/%E4%BB%8E%E6%B2%89%E7%9D%A1%E5%88%B0%E5%8F%8C%E7%AB%AF%E5%8F%91%E5%B8%83%EF%BC%9A%E5%8D%9A%E5%AE%A2%E5%8D%87%E7%BA%A7%E4%B8%8E%20GitHub%20Actions%20%E8%AE%B0%E5%BD%95/" rel="prev" title="从沉睡到双端发布">
+                  <i class="fa fa-angle-left"></i> 从沉睡到双端发布
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2026/09/30/%E6%95%91%E6%B4%BB%E6%B2%89%E7%9D%A1%E5%8D%9A%E5%AE%A2%EF%BC%8C%E4%BB%A5%E5%8F%8A%20Grok%20Bot%20%E5%B8%AE%E5%BE%97%E4%B8%8A%E7%9A%84%E5%9C%B0%E6%96%B9/" rel="next" title="救活沉睡博客，以及 Grok Bot 帮得上的地方">
+                  救活沉睡博客，以及 Grok Bot 帮得上的地方 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2017 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">vldh</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"alwaysloseall","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/js/third-party/comments/disqus.js" defer></script>
+
+</body>
+</html>

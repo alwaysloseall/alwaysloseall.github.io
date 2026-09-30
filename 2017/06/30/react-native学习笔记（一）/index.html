@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"alwaysloseall.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null,"activeClass":"disqus"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="创建好项目之后，现在就可以修改app.js并保存看效果了 一些基本组件的使用这里列出了几个上手的组件，通过props添加属性，这里以Image举例： Image1234&lt;Image     source&#x3D;&#123; require(&#x27;.&#x2F;images&#x2F;laopo.jpg&#x27;) &#125;    style&#x3D;&#123;styles.laopo&#125;&#x2F;&gt;  s">
+<meta property="og:type" content="article">
+<meta property="og:title" content="react-native 学习笔记（一）">
+<meta property="og:url" content="https://alwaysloseall.github.io/2017/06/30/react-native%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/index.html">
+<meta property="og:site_name" content="amazing!!!">
+<meta property="og:description" content="创建好项目之后，现在就可以修改app.js并保存看效果了 一些基本组件的使用这里列出了几个上手的组件，通过props添加属性，这里以Image举例： Image1234&lt;Image     source&#x3D;&#123; require(&#x27;.&#x2F;images&#x2F;laopo.jpg&#x27;) &#125;    style&#x3D;&#123;styles.laopo&#125;&#x2F;&gt;  s">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://alwaysloseall.github.io/image/2017/06/react-native_0.png">
+<meta property="og:image" content="https://alwaysloseall.github.io/image/2017/06/react-native_1.PNG">
+<meta property="article:published_time" content="2017-06-30T08:02:48.000Z">
+<meta property="article:author" content="vldh">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="React-Native">
+<meta property="article:tag" content="前端">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://alwaysloseall.github.io/image/2017/06/react-native_0.png">
+
+
+<link rel="canonical" href="https://alwaysloseall.github.io/2017/06/30/react-native%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://alwaysloseall.github.io/2017/06/30/react-native%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/","path":"2017/06/30/react-native学习笔记（一）/","title":"react-native 学习笔记（一）"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>react-native 学习笔记（一） | amazing!!!</title>
+  
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+<meta name="keywords" content="vldh, alwaysloseall, blog, 失败者, 勃学">
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">amazing!!!</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">哀吾生之须臾，羡长江之无穷</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E5%9F%BA%E6%9C%AC%E7%BB%84%E4%BB%B6%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text">一些基本组件的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Image"><span class="nav-number">1.1.</span> <span class="nav-text">Image</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#StyleSheet"><span class="nav-number">1.2.</span> <span class="nav-text">StyleSheet</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Button"><span class="nav-number">1.3.</span> <span class="nav-text">Button</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%ACAPI"><span class="nav-number">2.</span> <span class="nav-text">基本API</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Alert"><span class="nav-number">2.1.</span> <span class="nav-text">Alert</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AlertIOS"><span class="nav-number">2.2.</span> <span class="nav-text">AlertIOS</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="vldh"
+      src="https://avatars2.githubusercontent.com/u/20535775?v=3&s=460">
+  <p class="site-author-name" itemprop="name">vldh</p>
+  <div class="site-description" itemprop="description">一个在浅色床单上哭泣的失败者的博客</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/alwaysloseall" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;alwaysloseall" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="http://weibo.com/alwaysloseall" title="weibo → http:&#x2F;&#x2F;weibo.com&#x2F;alwaysloseall" rel="noopener me" target="_blank"><i class="fab fa-weibo fa-fw"></i>weibo</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://alwaysloseall.github.io/2017/06/30/react-native%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars2.githubusercontent.com/u/20535775?v=3&s=460">
+      <meta itemprop="name" content="vldh">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="amazing!!!">
+      <meta itemprop="description" content="一个在浅色床单上哭泣的失败者的博客">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="react-native 学习笔记（一） | amazing!!!">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          react-native 学习笔记（一）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2017-06-30 16:02:48" itemprop="dateCreated datePublished" datetime="2017-06-30T16:02:48+08:00">2017-06-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-09-30 10:11:41" itemprop="dateModified" datetime="2026-09-30T02:11:41+00:00">2026-09-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/React-Native/" itemprop="url" rel="index"><span itemprop="name">React-Native</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2017/06/30/react-native%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/06/30/react-native学习笔记（一）/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>创建好项目之后，现在就可以修改app.js并保存看效果了</p>
+<h3 id="一些基本组件的使用"><a href="#一些基本组件的使用" class="headerlink" title="一些基本组件的使用"></a>一些基本组件的使用</h3><p><img src="https://alwaysloseall.github.io/image/2017/06/react-native_0.png" alt="图片"><br>这里列出了几个上手的组件，通过props添加属性，这里以Image举例：</p>
+<h4 id="Image"><a href="#Image" class="headerlink" title="Image"></a>Image</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="title class_">Image</span> </span><br><span class="line">    source=&#123; <span class="built_in">require</span>(<span class="string">&#x27;./images/laopo.jpg&#x27;</span>) &#125;</span><br><span class="line">    style=&#123;styles.<span class="property">laopo</span>&#125;</span><br><span class="line">/&gt;</span><br></pre></td></tr></table></figure>
+
+<p>source属性可以指定一个图片的地址，可以是一个对象</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source=&#123;&#123; url: &#x27;/image.jpg&#x27; &#125;&#125;</span><br></pre></td></tr></table></figure>
+<p>也可以用 require() 引入静态资源。</p>
+<h4 id="StyleSheet"><a href="#StyleSheet" class="headerlink" title="StyleSheet"></a>StyleSheet</h4><p>这里要讲一下style的定义方式，可以直接</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sytle=&#123;&#123;</span><br><span class="line">    <span class="attr">width</span>: <span class="number">400</span>,</span><br><span class="line">    <span class="attr">height</span>: <span class="number">400</span></span><br><span class="line">&#125;&#125;</span><br></pre></td></tr></table></figure>
+<p>当然更推荐的是在代码内用</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> styles = <span class="title class_">StyleSheet</span>.<span class="title function_">create</span>(&#123;</span><br><span class="line">  <span class="attr">container</span>: &#123;</span><br><span class="line">    <span class="attr">flex</span>: <span class="number">1</span>,</span><br><span class="line">    <span class="attr">backgroundColor</span>: <span class="string">&#x27;#fff&#x27;</span>,</span><br><span class="line">    <span class="attr">alignItems</span>: <span class="string">&#x27;center&#x27;</span>,</span><br><span class="line">    <span class="attr">justifyContent</span>: <span class="string">&#x27;center&#x27;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">laopo</span>: &#123;</span><br><span class="line">     <span class="attr">width</span>: <span class="number">450</span>,</span><br><span class="line">     <span class="attr">height</span>: <span class="number">500</span>,</span><br><span class="line">     <span class="attr">left</span>: <span class="number">40</span>,</span><br><span class="line">     <span class="attr">top</span>: -<span class="number">80</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>然后再style属性里如上的方式添加样式，跟css的属性还是比较有出入，这些就去看文档就好啦</p>
+<h4 id="Button"><a href="#Button" class="headerlink" title="Button"></a>Button</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="title class_">Button</span></span><br><span class="line">    title=<span class="string">&quot;看更多...&quot;</span></span><br><span class="line">    color=<span class="string">&quot;#841584&quot;</span></span><br><span class="line">    onPress=&#123;<span class="function">() =&gt;</span></span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;button被点击了&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">/&gt;</span><br></pre></td></tr></table></figure>
+<p>onPress是button被按下时的时间，在可点击的组件里都可以注册这个事件</p>
+<blockquote>
+<p>在需要捕捉用户点击操作时，可以使用”Touchable”开头的一系列组件。这些组件通过onPress属性接受一个点击事件的处理函数。当一个点击操作开始并且终止于本组件时（即在本组件上按下手指并且抬起手指时也没有移开到组件外），此函数会被调用。</p>
+</blockquote>
+<h3 id="基本API"><a href="#基本API" class="headerlink" title="基本API"></a>基本API</h3><p>这里说几个基本的API吧，最基本的莫过于Alert了</p>
+<h4 id="Alert"><a href="#Alert" class="headerlink" title="Alert"></a>Alert</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="title class_">Button</span></span><br><span class="line">    title=<span class="string">&quot;Click Me!!&quot;</span></span><br><span class="line">    onPress=&#123;<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="title class_">Alert</span>.<span class="title function_">alert</span>(</span><br><span class="line">            <span class="string">&#x27;标题&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;内容&#x27;</span>,</span><br><span class="line">            [</span><br><span class="line">                &#123;<span class="attr">text</span>: <span class="string">&#x27;嘿嘿嘿&#x27;</span>, <span class="attr">onPress</span>: <span class="function">() =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;嘿嘿嘿&#x27;</span>)&#125;,</span><br><span class="line">                &#123;<span class="attr">text</span>: <span class="string">&#x27;取消&#x27;</span>, <span class="attr">onPress</span>: <span class="function">() =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;取消&#x27;</span>), <span class="attr">style</span>: <span class="string">&#x27;cancel&#x27;</span>&#125;,</span><br><span class="line">                &#123;<span class="attr">text</span>: <span class="string">&#x27;确定&#x27;</span>, <span class="attr">onPress</span>: <span class="function">() =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;确定&#x27;</span>)&#125;,</span><br><span class="line">            ],</span><br><span class="line">            &#123; <span class="attr">cancelable</span>: <span class="literal">false</span> &#125;</span><br><span class="line">        );</span><br><span class="line">    &#125;&#125;</span><br><span class="line">/&gt;</span><br></pre></td></tr></table></figure>
+<p>这一看就能看懂吧。。。效果如图<br><img src="https://alwaysloseall.github.io/image/2017/06/react-native_1.PNG" alt="图片"></p>
+<h4 id="AlertIOS"><a href="#AlertIOS" class="headerlink" title="AlertIOS"></a>AlertIOS</h4><p>这个是针对IOS用的，启动一个允许用户输入的对话框</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">AlertIOS</span>.<span class="title function_">prompt</span>(</span><br><span class="line">    <span class="string">&#x27;标题&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;内容&#x27;</span>,</span><br><span class="line">    [</span><br><span class="line">        &#123;<span class="attr">text</span>: <span class="string">&#x27;嘿嘿嘿&#x27;</span>, <span class="attr">onPress</span>: <span class="function">() =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;嘿嘿嘿&#x27;</span>)&#125;,</span><br><span class="line">        &#123;<span class="attr">text</span>: <span class="string">&#x27;取消&#x27;</span>, <span class="attr">onPress</span>: <span class="function">() =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;取消&#x27;</span>), <span class="attr">style</span>: <span class="string">&#x27;cancel&#x27;</span>&#125;,</span><br><span class="line">        &#123;<span class="attr">text</span>: <span class="string">&#x27;确定&#x27;</span>, <span class="attr">onPress</span>: <span class="function">() =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;确定&#x27;</span>)&#125;,</span><br><span class="line">    ],</span><br><span class="line">    <span class="function">(<span class="params">promptData</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(promptData)</span><br><span class="line">    &#125;</span><br><span class="line">);</span><br><span class="line">/&gt;</span><br></pre></td></tr></table></figure>
+
+<p>(end)</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%89%8D%E7%AB%AF/" rel="tag"># 前端</a>
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+              <a href="/tags/React-Native/" rel="tag"># React-Native</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2017/06/29/react-native%E5%88%9D%E6%8E%A2/" rel="prev" title="react-native 初探">
+                  <i class="fa fa-angle-left"></i> react-native 初探
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/07/01/react-natice%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/" rel="next" title="react-natice 学习笔记（二）">
+                  react-natice 学习笔记（二） <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2017 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">vldh</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"alwaysloseall","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/js/third-party/comments/disqus.js" defer></script>
+
+</body>
+</html>
